@@ -1,0 +1,11 @@
+@use '@/app/style/typography';
+
+.link {
+  @extend %text-body-1;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link_primary {
+  color: var(--color-primary);
+}

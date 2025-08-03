@@ -1,0 +1,16 @@
+{{#> main titleAddition="Sign in" }}
+    {{#*inline "content"}}
+        <div class="central-wrapper">
+            {{#> auth-form title="Log in"}}
+                {{#*inline "fields"}}
+                    {{> text-input label="Login" name="login" inputAttributes="required"}}
+                    {{> text-input label="Password" name="password" type="password" inputAttributes="required"}}
+                {{/inline}}
+                {{#*inline "buttons"}}
+                    {{> button label="Sign in"}}
+                    {{> link label="Registration" href="/pages/registration/registration.html" className="auth-form__link" }}
+                {{/inline}}
+            {{/auth-form}}
+        </div>
+    {{/inline}}
+{{/main}}

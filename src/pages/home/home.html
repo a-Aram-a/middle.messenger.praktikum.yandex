@@ -1,0 +1,17 @@
+{{#>main titleAddition="Home"}}
+    {{#*inline "content"}}
+        <div class="home-page">
+            <section class="home-page__left">
+                <div class="home-page__left-header">
+                    {{>link href="/pages/profile/profile.html" label="Profile >" className="home-page__profile-link"}}
+                    {{> search-input }}
+                </div>
+            </section>
+            <section class="home-page__main">
+                <div class="central-wrapper">
+                    <p class="home-page__placeholder-text">Select a chat to send a message</p>
+                </div>
+            </section>
+        </div>
+    {{/inline}}
+{{/main}}
