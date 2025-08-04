@@ -1,4 +1,4 @@
-{{#> main titleAddition="Sign up" }}
+{{#> main-layout titleAddition="Sign up" }}
     {{#*inline "content"}}
         <div class="central-wrapper">
             {{#> auth-form title="Registration"}}
@@ -13,9 +13,9 @@
                 {{/inline}}
                 {{#*inline "buttons"}}
                     {{> button label="Sign up"}}
-                    {{> link label="Log in" href="/pages/login/login.html" className="auth-form__link" }}
+                    {{> link label="Log in" href="/pages/auth/login.html" className="auth-form__link" }}
                 {{/inline}}
             {{/auth-form}}
         </div>
     {{/inline}}
-{{/main}}
+{{/main-layout}}

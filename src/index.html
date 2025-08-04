@@ -1,4 +1,4 @@
-{{#> main }}
+{{#> main-layout }}
     {{#*inline "content"}}
         <section class="central-wrapper">
             <div>
@@ -11,14 +11,17 @@
                 </p>
                 <nav>
                     <ul>
-                        <li><a href="/pages/login/login.html">Log In</a></li>
-                        <li><a href="/pages/registration/registration.html">Registration</a></li>
+                        <li><a href="/pages/auth/login.html">Log In</a></li>
+                        <li><a href="/pages/auth/registration.html">Registration</a></li>
                         <li><a href="/pages/errors/404.html">Error 404</a></li>
                         <li><a href="/pages/errors/500.html">Error 500</a></li>
                         <li><a href="/pages/home/home.html">Home</a></li>
+                        <li><a href="/pages/profile/profile.html">Profile</a></li>
+                        <li><a href="/pages/profile/edit-data.html">Edit profile data</a></li>
+                        <li><a href="/pages/profile/edit-password.html">Edit password</a></li>
                     </ul>
                 </nav>
             </div>
         </section>
     {{/inline}}
-{{/main}}
+{{/main-layout}}

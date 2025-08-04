@@ -31,7 +31,7 @@ export default defineConfig({
         port: 3000
     },
     plugins: [handlebars({
-        partialDirectory: ['./src/layout/main', ...partialDirectories],
+        partialDirectory: ['./src/layout/main', './src/layout/profile', ...partialDirectories],
         helpers: {
             default: (value, defaultValue) => {
                 return value || defaultValue;
