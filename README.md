@@ -1,3 +1,6 @@
+[Ссылка на макет](https://www.figma.com/design/dclLgMotSOROjYNRCruNGR/Practicum-Messenger?node-id=0-1&t=jao4AthM4dZrpS83-1)
+
+
 ### Ветка, в которой делаете задания спринта, должна называться sprint_i, где i - номер спринта. Не переименовывайте её.
 
 ### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main. 

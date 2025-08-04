@@ -1,0 +1,22 @@
+@use '@/app/style/typography';
+
+.button {
+  @extend %text-button-1;
+  display: block;
+  text-align: center;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button_primary {
+  background-color: var(--color-primary);
+  color: var(--color-background-primary);
+}
+
+.button_secondary {
+  background-color: var(--color-background-primary);
+  color: var(--color-primary);
+}

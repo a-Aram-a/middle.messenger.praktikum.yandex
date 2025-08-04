@@ -1,0 +1,38 @@
+@use '@/app/style/typography';
+
+.profile-layout {
+  display: flex;
+}
+
+.profile-layout__left {
+  height: 100vh;
+  width: 64px;
+}
+
+.profile-layout__main {
+  flex-grow: 1;
+}
+
+
+.profile-page {
+  width: 510px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.profile-page__buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-page__button {
+  @extend %text-button-1;
+  border-bottom: 1px solid var(--color-stroke);
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
