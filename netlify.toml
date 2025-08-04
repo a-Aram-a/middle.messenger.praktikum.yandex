@@ -1,0 +1,15 @@
+# Netlify configuration file for a Vite.js multi-page static web app.
+
+# The [build] block specifies the build settings.
+[build]
+  # This command is executed to build your site.
+  # Netlify automatically runs "npm install" before executing this command.
+  command = "npm run build"
+
+  # This is the directory that contains the built assets to be deployed.
+  # Vite's default output directory is "dist".
+  publish = "dist"
+
+# A redirect rule is not needed for a multi-page application.
+# Netlify will serve each HTML file from the "publish" directory directly
+# based on the request path.
