@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+%text-heading-1 {
+  font-size: 40px;
+  font-weight: 500;
+
+  @media (max-width: 640px) {
+    font-size: 32px;
+  }
+}
+
+%text-heading-2 {
+  font-size: 20px;
+  font-weight: 500;
+
+  @media (max-width: 640px) {
+    font-size: 18px;
+  }
+}
+
+%text-heading-3 {
+  font-size: 14px;
+  font-weight: 600;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
+}
+
+%text-body-1 {
+  font-size: 12px;
+  font-weight: 500;
+
+  @media (max-width: 640px) {
+    font-size: 11px;
+  }
+}
+
+%text-caption-1 {
+  font-size: 11px;
+  font-weight: 500;
+
+  @media (max-width: 640px) {
+    font-size: 10px;
+  }
+}
+
+%text-caption-2 {
+  font-size: 9px;
+  font-weight: 500;
+
+  @media (max-width: 640px) {
+    font-size: 8px;
+  }
+}
+
+%text-caption-3 {
+  font-size: 8px;
+  font-weight: 400;
+
+  @media (max-width: 640px) {
+    font-size: 7px;
+  }
+}
+
+%text-button-1 {
+  font-size: 13px;
+  font-weight: 500;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
+}
+
+
+:root {
+  @extend %text-body-1;
+
+  font-family: Inter, sans-serif;
+}
+
+@for $i from 1 through 3 {
+  h#{$i} {
+    @extend %text-heading-#{$i};
+  }
+}

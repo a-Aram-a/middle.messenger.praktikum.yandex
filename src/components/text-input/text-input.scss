@@ -1,0 +1,19 @@
+@use '@/app/style/typography';
+
+.text-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.text-input__label {
+  @extend %text-caption-2;
+  color: var(--color-text-secondary);
+}
+
+.text-input__input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--color-primary);
+  padding-bottom: 6px;
+}
