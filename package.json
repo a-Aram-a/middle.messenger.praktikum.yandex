@@ -2,7 +2,7 @@
   "name": "middle.messenger.praktikum.yandex",
   "private": true,
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.0.0"
   },
   "version": "0.0.0",
   "type": "module",
