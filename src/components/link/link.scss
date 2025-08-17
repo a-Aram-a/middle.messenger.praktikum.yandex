@@ -1,0 +1,24 @@
+@use '@/app/style/typography';
+@use "@/components/button/button";
+
+.link {
+  @extend %text-body-1;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link_primary {
+  color: var(--color-primary);
+}
+
+.link_danger {
+  color: var(--color-error);
+}
+
+.link_button {
+  @extend .button;
+}
+
+.link_button-primary {
+  @extend .button, .button_primary;
+}

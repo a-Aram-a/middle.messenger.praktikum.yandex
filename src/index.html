@@ -1,0 +1,27 @@
+{{#> main-layout }}
+    {{#*inline "content"}}
+        <section class="central-wrapper">
+            <div>
+                <header>
+                    <h1>{{ title }}</h1>
+                    <p>{{ description }}</p>
+                </header>
+                <p>
+                    Implemented pages:
+                </p>
+                <nav>
+                    <ul>
+                        <li>{{> link href="/pages/auth/login.html" label="Log In" }}</li>
+                        <li>{{> link href="/pages/auth/registration.html" label="Registration" }}</li>
+                        <li>{{> link href="/pages/errors/404.html" label="Error 404" }}</li>
+                        <li>{{> link href="/pages/errors/500.html" label="Error 500" }}</li>
+                        <li>{{> link href="/pages/home/home.html" label="Home" }}</li>
+                        <li>{{> link href="/pages/profile/profile.html" label="Profile" }}</li>
+                        <li>{{> link href="/pages/profile/edit-data.html" label="Edit profile data" }}</li>
+                        <li>{{> link href="/pages/profile/edit-password.html" label="Edit password" }}</li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    {{/inline}}
+{{/main-layout}}
