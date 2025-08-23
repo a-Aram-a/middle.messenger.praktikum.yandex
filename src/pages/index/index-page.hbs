@@ -1,0 +1,18 @@
+<section class="central-wrapper">
+    <div>
+        <header>
+            <h1>{{ this.title }}</h1>
+            <p>{{ this.description }}</p>
+        </header>
+        <p>
+            Implemented pages:
+        </p>
+        <nav>
+            <ul>
+                {{#each this.links}}
+                    <li>{{{ this }}}</li>
+                {{/each}}
+            </ul>
+        </nav>
+    </div>
+</section>

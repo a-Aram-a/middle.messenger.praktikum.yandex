@@ -1,6 +1,10 @@
-<div class="profile-avatar {{className}}">
+<div class="profile-avatar {{this.className}}">
     <label for="avatar" class="profile-avatar__label">
-        <img src="{{avatarUrl}}" alt="Profile Avatar" class="profile-avatar__image">
+        <img src="{{this.avatarUrl}}" alt="Profile Avatar" class="profile-avatar__image">
     </label>
-    <input type="file" id="avatar" name="avatar" class="profile-avatar__input" {{inputAttributes}}>
+    <input type="file"
+           id="avatar"
+           name="avatar"
+           class="profile-avatar__input"
+           {{#if this.disabled}}disabled{{/if}}>
 </div>

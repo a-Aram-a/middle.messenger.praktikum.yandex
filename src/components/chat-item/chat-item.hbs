@@ -1,0 +1,20 @@
+<a href="/chat/{{this.id}}" class="chat-item {{#if this.isActive}}chat-item_active{{/if}}">
+    <div class="chat-item__avatar">
+        <img class="chat-item__avatar-img" src="{{this.avatarUrl}}" alt="Аватар пользователя {{this.name}}">
+    </div>
+    <div class="chat-item__content">
+        <div class="chat-item__header">
+            <span class="chat-item__name">{{this.name}}</span>
+            <time class="chat-item__time">{{this.lastMessageTime}}</time>
+        </div>
+        <div class="chat-item__message-preview">
+            {{#if this.lastMessageSender}}
+                <span class="message-preview__sender">{{this.lastMessageSender}}</span>
+            {{/if}}
+            <p class="message-preview__text">{{this.lastMessageText}}</p>
+        </div>
+    </div>
+    {{#if this.unreadCount}}
+        <div class="chat-item__unread-counter">{{this.unreadCount}}</div>
+    {{/if}}
+</a>

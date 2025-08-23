@@ -1,22 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="/app/style/main.scss"/>
-    <meta name="description" content="{{ description }}"/>
-    {{#if titleAddition}}
-        <title>{{ title }} | {{ titleAddition }}</title>
-    {{else}}
-        <title>{{ title }}</title>
-    {{/if}}
-</head>
-<body>
-<div id="app">
-    <main>
-        {{> content }}
-    </main>
-</div>
-</body>
-</html>
+<main>
+    {{{this.content}}}
+</main>
