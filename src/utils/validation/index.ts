@@ -1,2 +1,2 @@
-export {ValidationRule, validate} from './validation';
-export {validateAndCollectData} from './form';
+export { ValidationRule, validate } from './validation';
+export { validateAndCollectData } from './form';

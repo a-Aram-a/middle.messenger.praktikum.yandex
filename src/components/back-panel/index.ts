@@ -1,1 +1,1 @@
-export {BackPanel} from './back-panel'
+export { BackPanel } from './back-panel';

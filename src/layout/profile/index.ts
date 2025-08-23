@@ -1,1 +1,1 @@
-export {ProfileLayout} from './profile-layout';
+export { ProfileLayout } from './profile-layout';

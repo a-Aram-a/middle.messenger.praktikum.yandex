@@ -50,11 +50,13 @@
 
 .chat-item__name {
   @extend %text-heading-3;
+
   font-weight: 600;
 }
 
 .chat-item__time {
   @extend %text-caption-2;
+
   color: var(--color-text-secondary);
 }
 
@@ -79,6 +81,7 @@
 
 .chat-item__unread-counter {
   @extend %text-caption-1;
+
   background-color: var(--color-primary);
   color: var(--color-background-primary);
   border-radius: 50%;

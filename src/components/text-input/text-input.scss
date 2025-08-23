@@ -8,6 +8,7 @@
 
 .text-input__label {
   @extend %text-caption-2;
+
   color: var(--color-text-secondary);
 }
 
@@ -20,5 +21,6 @@
 
 .text-input__error {
   @extend %text-caption-3;
+
   color: var(--color-error-secondary);
 }

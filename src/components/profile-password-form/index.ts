@@ -1,1 +1,1 @@
-export {ProfilePasswordForm} from './profile-password-form';
+export { ProfilePasswordForm } from './profile-password-form';

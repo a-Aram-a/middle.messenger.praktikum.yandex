@@ -1,1 +1,1 @@
-export {MessageFeed} from './message-feed'
+export { MessageFeed } from './message-feed';

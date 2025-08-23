@@ -6,7 +6,7 @@
   max-width: 400px;
   padding: 12px;
   border-radius: 12px;
-  word-break: break-word;
+  overflow-wrap: break-word;
 
   &_incoming {
     background-color: var(--color-background-tertiary);
@@ -38,6 +38,7 @@
 
 .message__timestamp {
   @extend %text-caption-2;
+
   color: var(--color-text-secondary);
   align-self: flex-end;
   margin-top: 8px;
@@ -46,7 +47,7 @@
     position: absolute;
     bottom: 8px;
     right: 8px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(0 0 0 / 50%);
     color: white;
     padding: 2px 6px;
     border-radius: 10px;

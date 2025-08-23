@@ -1,27 +1,27 @@
-import './button.scss'
+import './button.scss';
 
-import {Block, type Props} from '@/core/block';
+import { Block, type Props } from '@/core/block';
 import template from './button.hbs?raw';
 
 
 interface ButtonProps extends Props {
-    label?: string;
-    content?: Block;
-    type?: 'button' | 'submit' | 'reset';
-    variant?: 'primary' | 'secondary';
-    className?: string;
+  label?: string;
+  content?: Block;
+  type?: 'button' | 'submit' | 'reset';
+  variant?: 'primary' | 'secondary';
+  className?: string;
 }
 
 export class Button extends Block<ButtonProps> {
-    constructor(props: ButtonProps) {
-        super({
-            type: 'button',
-            variant: 'primary',
-            ...props,
-        });
-    }
+  constructor(props: ButtonProps) {
+    super({
+      type: 'button',
+      variant: 'primary',
+      ...props,
+    });
+  }
 
-    render() {
-        return template;
-    }
+  render() {
+    return template;
+  }
 }

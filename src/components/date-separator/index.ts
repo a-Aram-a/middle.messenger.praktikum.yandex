@@ -1,1 +1,1 @@
-export {DateSeparator} from './date-separator'
+export { DateSeparator } from './date-separator';
