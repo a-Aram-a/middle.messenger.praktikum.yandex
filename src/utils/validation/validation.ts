@@ -19,5 +19,9 @@ const validationPatterns: Record<ValidationRule, RegExp> = {
 };
 
 export function validate(rule: ValidationRule, value: string): boolean {
+    if (rule === ValidationRule.Message) {
+        return value.trim().length > 0;
+    }
+    
     return validationPatterns[rule].test(value);
 }

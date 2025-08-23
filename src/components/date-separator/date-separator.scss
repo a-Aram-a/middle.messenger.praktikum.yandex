@@ -1,7 +1,7 @@
 @use '@/app/style/typography';
 
 .message-feed__date-separator {
-  @extend %text-caption-2;
+  @extend %text-caption-1;
   color: var(--color-text-secondary);
   text-align: center;
   margin: 10px 0;
