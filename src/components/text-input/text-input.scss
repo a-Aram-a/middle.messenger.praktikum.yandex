@@ -17,3 +17,8 @@
   border-bottom: 1px solid var(--color-primary);
   padding-bottom: 6px;
 }
+
+.text-input__error {
+  @extend %text-caption-3;
+  color: var(--color-error-secondary);
+}

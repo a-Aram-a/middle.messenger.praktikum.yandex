@@ -1,3 +1,7 @@
-<a href="{{default href '#'}}" class="link link_{{default variant 'primary'}} {{className}}">
-    {{label}}
+<a href="{{this.href}}" class="link link_{{this.variant}} {{this.className}}">
+    {{#if this.label}}
+        {{this.label}}
+    {{else}}
+        {{{ this.content }}}
+    {{/if}}
 </a>

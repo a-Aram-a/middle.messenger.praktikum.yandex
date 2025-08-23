@@ -1,0 +1,1 @@
+export {setPageMetadata} from './metadata';

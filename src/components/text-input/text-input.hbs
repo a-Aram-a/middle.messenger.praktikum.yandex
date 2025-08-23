@@ -1,9 +1,12 @@
 <div class="text-input">
-    <label for="{{name}}" class="text-input__label">{{label}}</label>
-    <input type="{{default type 'text'}}"
-           id="{{name}}"
-           name="{{name}}"
+    <label for="{{this.name}}" class="text-input__label">{{this.label}}</label>
+    <input type="{{this.type}}"
+           id="{{this.name}}"
+           name="{{this.name}}"
            class="text-input__input"
-           value="{{value}}"
-        {{inputAttributes}}>
+           value="{{this.value}}"
+           {{#if this.disabled}}disabled{{/if}}>
+    {{#if this.error}}
+        <span class="text-input__error">{{this.error}}</span>
+    {{/if}}
 </div>

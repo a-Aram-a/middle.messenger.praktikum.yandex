@@ -1,3 +1,7 @@
-<button type="{{default type 'button'}}" class="button button_{{default variant 'primary'}}">
-    {{label}}
+<button type="{{this.type}}" class="button button_{{this.variant}}">
+    {{#if this.label}}
+        {{this.label}}
+    {{else}}
+        {{{ this.content }}}
+    {{/if}}
 </button>
