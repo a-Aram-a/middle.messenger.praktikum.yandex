@@ -3,23 +3,22 @@
   position: relative;
 }
 
-.search-input:has(.search-input__input:placeholder-shown) .search-input__label {
-  opacity: 1;
-}
-
 .search-input__label {
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
   color: var(--color-text-secondary);
   gap: 4px;
+  cursor: text;
+}
+
+.search-input:has(.search-input__input:placeholder-shown) .search-input__label {
+  display: flex;
 }
 
 .search-input__label::before {

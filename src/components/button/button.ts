@@ -9,6 +9,7 @@ interface ButtonProps extends Props {
     content?: Block;
     type?: 'button' | 'submit' | 'reset';
     variant?: 'primary' | 'secondary';
+    className?: string;
 }
 
 export class Button extends Block<ButtonProps> {

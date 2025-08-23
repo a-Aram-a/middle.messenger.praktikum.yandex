@@ -11,6 +11,8 @@ interface TextInputProps extends Props {
     initialValue?: string;
     validationRule?: ValidationRule;
     disabled?: boolean;
+    placeholder?: string;
+    className?: string;
 }
 
 export class TextInput extends Block<TextInputProps> {
