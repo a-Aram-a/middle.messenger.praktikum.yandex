@@ -1,5 +1,5 @@
-import {EventBus} from './event-bus';
-import {nanoid} from 'nanoid';
+import { EventBus } from './event-bus';
+import { nanoid } from 'nanoid';
 import Handlebars from 'handlebars';
 
 // Base type for events with delegation support ('eventName@selector')
@@ -34,10 +34,10 @@ export class Block<P extends Props = any> {
   constructor(propsWithChildren: P) {
     const eventBus = new EventBus();
 
-    const {props, children} = this._separatePropsAndChildren(propsWithChildren);
+    const { props, children } = this._separatePropsAndChildren(propsWithChildren);
 
     this.children = children;
-    this.props = this._makePropsProxy({...props, ...children});
+    this.props = this._makePropsProxy({ ...props, ...children });
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
@@ -56,7 +56,7 @@ export class Block<P extends Props = any> {
       }
     });
 
-    return {props: props as P, children};
+    return { props: props as P, children };
   }
 
   private _registerEvents(eventBus: EventBus) {
@@ -132,7 +132,7 @@ export class Block<P extends Props = any> {
 
   private compile(template: string, props: P): DocumentFragment {
     // separate the child components from the rest of the props
-    const {props: propsWithoutChildren, children} = this._separatePropsAndChildren(props);
+    const { props: propsWithoutChildren, children } = this._separatePropsAndChildren(props);
     this.children = children; // update children for dispatchComponentDidMount
 
     const fragment = document.createElement('template');
@@ -148,7 +148,7 @@ export class Block<P extends Props = any> {
     }, {} as Record<string, string | string[]>);
 
     // compile the template with primitive props and stubs
-    fragment.innerHTML = Handlebars.compile(template)({...propsWithoutChildren, ...stubs});
+    fragment.innerHTML = Handlebars.compile(template)({ ...propsWithoutChildren, ...stubs });
 
     // replace the stubs with real DOM elements of the child components
     Object.values(children).forEach(child => {
@@ -178,7 +178,7 @@ export class Block<P extends Props = any> {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
-        const oldProps = {...target};
+        const oldProps = { ...target };
         target[prop as keyof P] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
         return true;
@@ -190,7 +190,7 @@ export class Block<P extends Props = any> {
   }
 
   private _addEvents() {
-    const {events = {}} = this.props;
+    const { events = {} } = this.props;
 
     Object.entries(events).forEach(([eventSpec, listener]) => {
       const [eventName, selector] = eventSpec.split('@');
@@ -205,7 +205,7 @@ export class Block<P extends Props = any> {
   }
 
   private _removeEvents() {
-    const {events = {}} = this.props;
+    const { events = {} } = this.props;
 
     Object.entries(events).forEach(([eventSpec, listener]) => {
       const [eventName, selector] = eventSpec.split('@');
