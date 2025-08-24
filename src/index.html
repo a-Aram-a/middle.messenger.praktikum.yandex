@@ -1,27 +1,17 @@
-{{#> main-layout }}
-    {{#*inline "content"}}
-        <section class="central-wrapper">
-            <div>
-                <header>
-                    <h1>{{ title }}</h1>
-                    <p>{{ description }}</p>
-                </header>
-                <p>
-                    Implemented pages:
-                </p>
-                <nav>
-                    <ul>
-                        <li>{{> link href="/pages/auth/login.html" label="Log In" }}</li>
-                        <li>{{> link href="/pages/auth/registration.html" label="Registration" }}</li>
-                        <li>{{> link href="/pages/errors/404.html" label="Error 404" }}</li>
-                        <li>{{> link href="/pages/errors/500.html" label="Error 500" }}</li>
-                        <li>{{> link href="/pages/home/home.html" label="Home" }}</li>
-                        <li>{{> link href="/pages/profile/profile.html" label="Profile" }}</li>
-                        <li>{{> link href="/pages/profile/edit-data.html" label="Edit profile data" }}</li>
-                        <li>{{> link href="/pages/profile/edit-password.html" label="Edit password" }}</li>
-                    </ul>
-                </nav>
-            </div>
-        </section>
-    {{/inline}}
-{{/main-layout}}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="A secure messaging app built with modern web technologies."/>
+    <title>Nuclear Messenger</title>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- Entry point -->
+<script type="module" src="/main.ts"></script>
+
+</body>
+</html>

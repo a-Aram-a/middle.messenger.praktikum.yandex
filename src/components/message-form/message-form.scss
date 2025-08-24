@@ -1,0 +1,50 @@
+.message-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.message-form__attach-button,
+.message-form__send-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.message-form__attach-button {
+  background: url("/images/icons/attach-icon.svg") no-repeat center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.message-form__send-button {
+  background-color: var(--color-primary);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.message-form__input {
+  flex-grow: 1;
+  gap: 0;
+}
+
+.message-form__input input {
+  background-color: var(--color-background-tertiary);
+  border: none;
+  border-radius: 30px;
+  padding: 8px 15px;
+  outline: none;
+}
+
+.message-form__input:has(.text-input__error) input {
+  border: 1px solid var(--color-error-secondary);
+}
+
+.message-form__input .text-input__error {
+  display: none;
+}

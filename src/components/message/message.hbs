@@ -1,0 +1,13 @@
+<div class="message {{this.className}}">
+    {{#if this.text}}
+        <p class="message__text">{{{this.text}}}</p>
+        <time class="message__timestamp">{{this.timestamp}}</time>
+    {{/if}}
+
+    {{#if this.imageUrl}}
+        <div class="message__image-container">
+            <img src="{{this.imageUrl}}" alt="Image in chat" class="message__image">
+            <time class="message__timestamp message__timestamp_on-image">{{this.timestamp}}</time>
+        </div>
+    {{/if}}
+</div>

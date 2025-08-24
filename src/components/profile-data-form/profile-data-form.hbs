@@ -1,38 +1,18 @@
 <form class="profile-data-form">
 
     <div class="profile-data-form__header">
-        {{#if isDisabled}}
-            {{> profile-avatar avatarUrl=avatarUrl inputAttributes="disabled" }}
-        {{else}}
-            {{> profile-avatar avatarUrl=avatarUrl }}
-        {{/if}}
+        {{{this.profileAvatar}}}
 
         <div class="profile-data-form__nickname">
-            <h3>{{display_name}}</h3>
+            <h3>{{this.displayName}}</h3>
         </div>
     </div>
 
     <div class="profile-data-form__fields">
-        {{#if isDisabled}}
-            {{> text-input name="email" type="email" label="Email" value=email inputAttributes="disabled" }}
-            {{> text-input name="login" label="Login" value=login inputAttributes="disabled" }}
-            {{> text-input name="first_name" label="First Name" value=first_name inputAttributes="disabled" }}
-            {{> text-input name="second_name" label="Second Name" value=second_name inputAttributes="disabled" }}
-            {{> text-input name="display_name" type="text" label="Display Name" value=display_name inputAttributes="disabled" }}
-            {{> text-input name="phone" type="tel" label="Phone Number" value=phone inputAttributes="disabled" }}
-        {{else}}
-            {{> text-input name="email" type="email" label="Email" value=email inputAttributes="required" }}
-            {{> text-input name="login" label="Login" value=login inputAttributes="required" }}
-            {{> text-input name="first_name" label="First Name" value=first_name inputAttributes="required" }}
-            {{> text-input name="second_name" label="Second Name" value=second_name inputAttributes="required" }}
-            {{> text-input name="display_name" type="text" label="Display Name" value=display_name inputAttributes="required" }}
-            {{> text-input name="phone" type="tel" label="Phone Number" value=phone inputAttributes="required" }}
-        {{/if}}
+        {{#each this.fields}}
+            {{{this}}}
+        {{/each}}
     </div>
 
-
-    {{#unless isDisabled}}
-        {{>button type="submit" label="Save" }}
-    {{/unless }}
-
+    {{{this.submitButton}}}
 </form>
