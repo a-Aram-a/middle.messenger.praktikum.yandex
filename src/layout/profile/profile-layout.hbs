@@ -1,21 +1,21 @@
-{{#>main-layout titleAddition="Profile"}}
-    {{#*inline "content"}}
-        <div class="profile-layout">
-            <section class="profile-layout__left">
-                {{>back-panel backLink='/pages/home/home.html'}}
-            </section>
-            <section class="profile-layout__main">
-                <div class="central-wrapper">
-                    <div class="profile-page">
-                        <section class="profile-page__fields">
-                            {{>profile-form}}
-                        </section>
-                        <section class="profile-page__buttons">
-                            {{#>profile-buttons}}{{/profile-buttons}}
-                        </section>
-                    </div>
-                </div>
-            </section>
+<div class="profile-layout">
+    <section class="profile-layout__left">
+        {{{ backPanel }}}
+    </section>
+    <section class="profile-layout__main">
+        <div class="central-wrapper">
+            <div class="profile-page">
+                <section class="profile-page__fields">
+                    {{{ profileForm }}}
+                </section>
+                <section class="profile-page__buttons">
+                    {{#each profileButtons}}
+                        {{{ this }}}
+                    {{else}}
+                        {{{ profileButtons }}}
+                    {{/each}}
+                </section>
+            </div>
         </div>
-    {{/inline}}
-{{/main-layout}}
+    </section>
+</div>

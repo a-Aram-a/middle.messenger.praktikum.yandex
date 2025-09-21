@@ -1,7 +1,8 @@
 @use '@/app/style/typography';
 
-.button {
+%button {
   @extend %text-button-1;
+
   display: block;
   text-align: center;
   border: none;
@@ -11,12 +12,24 @@
   text-decoration: none;
 }
 
-.button_primary {
+%button_primary {
   background-color: var(--color-primary);
   color: var(--color-background-primary);
 }
 
-.button_secondary {
+%button_secondary {
   background-color: var(--color-background-primary);
   color: var(--color-primary);
+}
+
+.button {
+  @extend %button;
+}
+
+.button_primary {
+  @extend %button_primary;
+}
+
+.button_secondary {
+  @extend %button_secondary;
 }

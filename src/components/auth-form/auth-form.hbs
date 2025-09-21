@@ -1,11 +1,15 @@
 <form class="auth-form">
     <header class="auth-form__header">
-        <h2>{{ title }}</h2>
+        <h2>{{ this.title }}</h2>
     </header>
     <div class="auth-form__fields">
-        {{> fields}}
+        {{#each this.fields}}
+            {{{ this }}}
+        {{/each}}
     </div>
     <div class="auth-form__buttons">
-        {{> buttons}}
+        {{#each this.buttons}}
+            {{{ this }}}
+        {{/each}}
     </div>
 </form>

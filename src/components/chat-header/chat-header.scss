@@ -1,0 +1,27 @@
+@use '@/app/style/typography';
+
+.chat-header {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: var(--color-background-tertiary);
+  margin-right: 10px;
+  overflow: hidden;
+}
+
+.chat-header__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-header__name {
+  @extend %text-heading-3;
+
+  font-weight: 600;
+}

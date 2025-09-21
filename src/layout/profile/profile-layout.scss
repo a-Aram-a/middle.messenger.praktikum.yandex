@@ -28,6 +28,7 @@
 
 .profile-page__button {
   @extend %text-button-1;
+
   border-bottom: 1px solid var(--color-stroke);
   padding-top: 8px;
   padding-bottom: 8px;

@@ -3,6 +3,7 @@
 
 .link {
   @extend %text-body-1;
+
   cursor: pointer;
   text-decoration: none;
 }
@@ -16,9 +17,9 @@
 }
 
 .link_button {
-  @extend .button;
+  @extend %button;
 }
 
 .link_button-primary {
-  @extend .button, .button_primary;
+  @extend %button, %button_primary;
 }
