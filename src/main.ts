@@ -1,12 +1,12 @@
 import './app/style/main.scss';
 
-import {Router} from '@/core/router';
-import {LoginPage} from '@/pages/login';
-import {RegistrationPage} from '@/pages/registration';
-import {NotFoundPage} from '@/pages/404';
-import {ServerErrorPage} from '@/pages/500';
-import {HomePage} from '@/pages/home';
-import {ProfileEditDataPage, ProfileEditPasswordPage, ProfilePage} from '@/pages/profile';
+import { Router } from '@/core/router';
+import { LoginPage } from '@/pages/login';
+import { RegistrationPage } from '@/pages/registration';
+import { NotFoundPage } from '@/pages/404';
+import { ServerErrorPage } from '@/pages/500';
+import { HomePage } from '@/pages/home';
+import { ProfileEditDataPage, ProfileEditPasswordPage, ProfilePage } from '@/pages/profile';
 import authController from '@/controllers/auth-controller';
 import store from '@/core/store/store';
 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Start the application by checking auth status first
   try {
     await authController.fetchUser();
-    const {user} = store.getState();
+    const { user } = store.getState();
     const currentPath = window.location.pathname;
 
     router.start();

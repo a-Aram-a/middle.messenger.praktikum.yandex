@@ -1,4 +1,4 @@
-import {HTTPTransport} from '@/core/http-transport';
+import { HTTPTransport } from '@/core/http-transport';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://ya-praktikum.tech/api/v2';
 

@@ -1,7 +1,7 @@
 import './link.scss';
 
-import {Block, type Props} from '@/core/block';
-import {Router} from '@/core/router';
+import { Block, type Props } from '@/core/block';
+import { Router } from '@/core/router';
 import template from './link.hbs?raw';
 
 interface LinkProps extends Props {

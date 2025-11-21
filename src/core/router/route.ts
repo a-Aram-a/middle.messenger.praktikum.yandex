@@ -1,5 +1,5 @@
-import {type Block, type Props} from '@/core/block';
-import {renderDOM} from '@/core/render-dom';
+import { type Block, type Props } from '@/core/block';
+import { renderDOM } from '@/core/render-dom';
 
 type BlockConstructor<P extends Props> = new (props: P) => Block<P>;
 

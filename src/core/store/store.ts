@@ -1,6 +1,6 @@
-import {EventBus} from '@/core/event-bus';
+import { EventBus } from '@/core/event-bus';
 import set from '@/utils/mydash/set';
-import {type Block} from '@/core/block';
+import { type Block } from '@/core/block';
 
 export enum StoreEvents {
   Updated = 'updated',
@@ -29,7 +29,7 @@ export function connect(mapStateToProps: TStateMapper) {
   return function <P extends Record<string, any>>(Component: new (props: P) => Block<P>) {
     return class extends Component {
       constructor(props: P) {
-        super({...props, ...mapStateToProps(store.getState())});
+        super({ ...props, ...mapStateToProps(store.getState()) });
 
         store.on(StoreEvents.Updated, () => {
           const newProps = mapStateToProps(store.getState());

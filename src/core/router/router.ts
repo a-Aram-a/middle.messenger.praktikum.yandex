@@ -1,5 +1,5 @@
-import {type Block, type Props} from '@/core/block';
-import {Route} from './route';
+import { type Block, type Props } from '@/core/block';
+import { Route } from './route';
 
 type BlockConstructor<P extends Props> = new (props: P) => Block<P>;
 

@@ -1,4 +1,4 @@
-import {BaseAPI} from './base-api';
+import { BaseAPI } from './base-api';
 
 export type SignupData = {
   first_name: string;
@@ -44,13 +44,13 @@ class AuthAPI extends BaseAPI {
   }
 
   public signup(data: SignupData): Promise<{ id: number }> {
-    return this.http.post('/signup', {data})
+    return this.http.post('/signup', { data })
       .then(xhr => this.handleResponse<{ id: number }>(xhr))
       .catch(this.handleError);
   }
 
   public signin(data: SigninData): Promise<void> {
-    return this.http.post('/signin', {data})
+    return this.http.post('/signin', { data })
       .then(xhr => this.handleResponse<void>(xhr))
       .catch(this.handleError);
   }
