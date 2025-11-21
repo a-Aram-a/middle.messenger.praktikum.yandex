@@ -7,52 +7,61 @@ import { ProfileAvatar } from '@/components/profile-avatar';
 import { ValidationRule } from '@/utils/validation';
 import template from './profile-data-form.hbs?raw';
 import { validateAndCollectData } from '@/utils/validation';
+import { connect } from '@/core/store/store';
+import { type User } from '@/app/api/auth-api';
+import userController from '@/controllers/user-controller';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://ya-praktikum.tech/api/v2';
 
 interface ProfileDataFormProps extends Props {
   isDisabled?: boolean;
   onSubmit?: (data: Record<string, string>) => void;
+  user?: User | null;
 }
 
-export class ProfileDataForm extends Block<ProfileDataFormProps> {
+class ProfileDataFormBase extends Block<ProfileDataFormProps> {
+  private _fields: TextInput[];
+
   constructor(props: ProfileDataFormProps) {
+    const user = props.user;
+
     const fields = [
       new TextInput({
         name: 'email',
         label: 'Email',
         type: 'email',
-        initialValue: 'pochta@yandex.ru',
+        initialValue: user?.email || '',
         validationRule: ValidationRule.Email,
       }),
       new TextInput({
         name: 'login',
         label: 'Login',
-        initialValue: 'ivanivanov',
+        initialValue: user?.login || '',
         validationRule: ValidationRule.Login,
       }),
       new TextInput({
         name: 'first_name',
         label: 'First Name',
-        initialValue: 'Ivan',
+        initialValue: user?.first_name || '',
         validationRule: ValidationRule.FirstName,
       }),
       new TextInput({
         name: 'second_name',
         label: 'Second Name',
-        initialValue: 'Ivanov',
+        initialValue: user?.second_name || '',
         validationRule: ValidationRule.SecondName,
       }),
       new TextInput({
         name: 'display_name',
         label: 'Display Name',
-        initialValue: 'Van123',
+        initialValue: user?.display_name || '',
         validationRule: ValidationRule.Login,
       }),
       new TextInput({
         name: 'phone',
         label: 'Phone Number',
         type: 'tel',
-        initialValue: '+79099673030',
+        initialValue: user?.phone || '',
         validationRule: ValidationRule.Phone,
       }),
     ];
@@ -61,19 +70,46 @@ export class ProfileDataForm extends Block<ProfileDataFormProps> {
       fields.forEach(field => field.setProps({ disabled: true }));
     }
 
+    const avatarUrl = user?.avatar
+      ? `${API_BASE_URL}/resources${user.avatar}`
+      : '/images/icons/avatar-placeholder.svg';
+
     super({
       ...props,
       profileAvatar: new ProfileAvatar({
-        avatarUrl: '/images/icons/avatar-placeholder.svg',
+        avatarUrl,
         disabled: props.isDisabled,
+        onAvatarChange: (file: File) => userController.updateAvatar(file),
       }),
-      displayName: 'Van123',
+      displayName: user?.display_name || user?.first_name || '',
       fields: fields,
       submitButton: !props.isDisabled ? new Button({ type: 'submit', label: 'Save' }) : undefined,
       events: {
         submit: (event: Event) => this.handleSubmit(event),
       },
     });
+
+    this._fields = fields;
+  }
+
+  componentDidUpdate(oldProps: ProfileDataFormProps, newProps: ProfileDataFormProps): boolean {
+    if (oldProps.user !== newProps.user && newProps.user) {
+      const user = newProps.user;
+      this._fields[0].setProps({ initialValue: user.email, value: user.email });
+      this._fields[1].setProps({ initialValue: user.login, value: user.login });
+      this._fields[2].setProps({ initialValue: user.first_name, value: user.first_name });
+      this._fields[3].setProps({ initialValue: user.second_name, value: user.second_name });
+      this._fields[4].setProps({ initialValue: user.display_name || '', value: user.display_name || '' });
+      this._fields[5].setProps({ initialValue: user.phone, value: user.phone });
+
+      const avatarUrl = user.avatar
+        ? `${API_BASE_URL}/resources${user.avatar}`
+        : '/images/icons/avatar-placeholder.svg';
+      (this.children.profileAvatar as unknown as ProfileAvatar).setProps({ avatarUrl });
+
+      this.setProps({ displayName: user.display_name || user.first_name || '' });
+    }
+    return true;
   }
 
   handleSubmit(event: Event) {
@@ -95,3 +131,7 @@ export class ProfileDataForm extends Block<ProfileDataFormProps> {
     return template;
   }
 }
+
+export const ProfileDataForm = connect((state) => ({
+  user: state.user as User | null,
+}))(ProfileDataFormBase);
