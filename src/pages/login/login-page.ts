@@ -1,17 +1,19 @@
-import { Block } from '@/core/block';
-import { MainLayout } from '@/layout/main';
-import { AuthForm } from '@/components/auth-form';
-import { TextInput } from '@/components/text-input';
-import { Button } from '@/components/button';
-import { Link } from '@/components/link';
-import { ValidationRule } from '@/utils/validation';
-import { ContentBlock } from '@/core/content-block';
+import {Block} from '@/core/block';
+import {MainLayout} from '@/layout/main';
+import {AuthForm} from '@/components/auth-form';
+import {TextInput} from '@/components/text-input';
+import {Button} from '@/components/button';
+import {Link} from '@/components/link';
+import {ValidationRule} from '@/utils/validation';
+import {ContentBlock} from '@/core/content-block';
 import template from './login-page.hbs?raw';
-import { setPageMetadata } from '@/utils/metadata';
+import {setPageMetadata} from '@/utils/metadata';
+import authController from '@/controllers/auth-controller';
+import {type SigninData} from '@/app/api/auth-api';
 
 export class LoginPage extends Block {
   constructor() {
-    setPageMetadata({ title: 'Sign in' });
+    setPageMetadata({title: 'Sign in'});
 
     const loginInput = new TextInput({
       name: 'login',
@@ -32,7 +34,7 @@ export class LoginPage extends Block {
     });
 
     const registrationLink = new Link({
-      href: '/registration',
+      href: '/sign-up',
       label: 'Registration',
       className: 'auth-form__link',
     });
@@ -42,7 +44,7 @@ export class LoginPage extends Block {
       fields: [loginInput, passwordInput],
       buttons: [submitButton, registrationLink],
       onSubmit: (data) => {
-        console.log('Login form submitted with data:', data);
+        authController.signin(data as SigninData);
       },
     });
 

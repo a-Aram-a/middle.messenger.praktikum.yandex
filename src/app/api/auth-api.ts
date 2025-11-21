@@ -1,4 +1,4 @@
-import { BaseAPI } from './base-api';
+import {BaseAPI} from './base-api';
 
 export type SignupData = {
   first_name: string;
@@ -20,20 +20,51 @@ class AuthAPI extends BaseAPI {
     super('/auth');
   }
 
-  public signup(data: SignupData): Promise<XMLHttpRequest> {
-    return this.http.post('/signup', { data });
+  private handleResponse<T>(xhr: XMLHttpRequest): Promise<T> {
+    if (xhr.response === 'OK') {
+      return Promise.resolve({} as T);
+    }
+    try {
+      return Promise.resolve(JSON.parse(xhr.responseText));
+    } catch (e) {
+      return Promise.reject(new Error('Failed to parse JSON response'));
+    }
   }
 
-  public signin(data: SigninData): Promise<XMLHttpRequest> {
-    return this.http.post('/signin', { data });
+  private handleError(xhr: XMLHttpRequest): Promise<never> {
+    let error;
+    try {
+      const response = JSON.parse(xhr.responseText);
+      error = new Error(response.reason || `HTTP error! Status: ${xhr.status}`);
+      Object.assign(error, response);
+    } catch (e) {
+      error = new Error(`HTTP error! Status: ${xhr.status}`);
+    }
+    return Promise.reject(error);
   }
 
-  public getUser(): Promise<XMLHttpRequest> {
-    return this.http.get('/user');
+  public signup(data: SignupData): Promise<{ id: number }> {
+    return this.http.post('/signup', {data})
+      .then(xhr => this.handleResponse<{ id: number }>(xhr))
+      .catch(this.handleError);
   }
 
-  public logout(): Promise<XMLHttpRequest> {
-    return this.http.post('/logout');
+  public signin(data: SigninData): Promise<void> {
+    return this.http.post('/signin', {data})
+      .then(xhr => this.handleResponse<void>(xhr))
+      .catch(this.handleError);
+  }
+
+  public getUser(): Promise<any> {
+    return this.http.get('/user')
+      .then(xhr => this.handleResponse<any>(xhr))
+      .catch(this.handleError);
+  }
+
+  public logout(): Promise<void> {
+    return this.http.post('/logout')
+      .then(xhr => this.handleResponse<void>(xhr))
+      .catch(this.handleError);
   }
 }
 

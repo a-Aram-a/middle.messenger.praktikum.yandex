@@ -1,6 +1,7 @@
 import './link.scss';
 
-import { Block, type Props } from '@/core/block';
+import {Block, type Props} from '@/core/block';
+import {Router} from '@/core/router';
 import template from './link.hbs?raw';
 
 interface LinkProps extends Props {
@@ -16,7 +17,17 @@ export class Link extends Block<LinkProps> {
     super({
       variant: 'primary',
       ...props,
+      events: {
+        click: (event: Event) => this.navigate(event),
+      },
     });
+  }
+
+  navigate(event: Event) {
+    event.preventDefault();
+
+    const router = new Router('#app');
+    router.go(this.props.href);
   }
 
   render() {

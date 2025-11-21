@@ -1,53 +1,63 @@
 import './app/style/main.scss';
 
-import { renderDOM } from '@/core/render-dom';
-import { LoginPage } from '@/pages/login';
-import { RegistrationPage } from '@/pages/registration';
-import { NotFoundPage } from '@/pages/404';
-import { ServerErrorPage } from '@/pages/500';
-import { IndexPage } from '@/pages/index';
-import { HomePage } from '@/pages/home';
-import { ProfileEditDataPage, ProfileEditPasswordPage, ProfilePage } from '@/pages/profile';
+import {Router} from '@/core/router';
+import {LoginPage} from '@/pages/login';
+import {RegistrationPage} from '@/pages/registration';
+import {NotFoundPage} from '@/pages/404';
+import {ServerErrorPage} from '@/pages/500';
+import {HomePage} from '@/pages/home';
+import {ProfileEditDataPage, ProfileEditPasswordPage, ProfilePage} from '@/pages/profile';
+import authController from '@/controllers/auth-controller';
+import store from '@/core/store/store';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const path = window.location.pathname;
-  let page;
+enum Routes {
+  Index = '/',
+  SignUp = '/sign-up',
+  Settings = '/settings',
+  Messenger = '/messenger',
+  ProfileEditData = '/profile-edit-data',
+  ProfileEditPassword = '/profile-edit-password',
+  ServerError = '/500',
+  NotFound = '/404',
+}
 
-  switch (path) {
-    case '/':
-      page = new IndexPage();
-      break;
+document.addEventListener('DOMContentLoaded', async () => {
+  const router = new Router('#app');
 
-    case '/login':
-      page = new LoginPage();
-      break;
-    case '/registration':
-      page = new RegistrationPage();
-      break;
+  router
+    .use(Routes.Index, LoginPage)
+    .use(Routes.SignUp, RegistrationPage)
+    .use(Routes.Settings, ProfilePage)
+    .use(Routes.Messenger, HomePage)
+    .use(Routes.ProfileEditData, ProfileEditDataPage)
+    .use(Routes.ProfileEditPassword, ProfileEditPasswordPage)
+    .use(Routes.ServerError, ServerErrorPage)
+    .use(Routes.NotFound, NotFoundPage);
 
-    case '/home':
-      page = new HomePage();
-      break;
 
-    case '/profile':
-      page = new ProfilePage();
-      break;
-    case '/profile-edit-data':
-      page = new ProfileEditDataPage();
-      break;
-    case '/profile-edit-password':
-      page = new ProfileEditPasswordPage();
-      break;
+  // Start the application by checking auth status first
+  try {
+    await authController.fetchUser();
+    const {user} = store.getState();
+    const currentPath = window.location.pathname;
 
-    case '/500':
-      page = new ServerErrorPage();
-      break;
+    router.start();
 
-    case '/404':
-    default:
-      page = new NotFoundPage();
-      break;
+    if (user) {
+      if (currentPath === Routes.Index || currentPath === Routes.SignUp) {
+        router.go(Routes.Messenger);
+      }
+    } else {
+      const protectedRoutes = [Routes.Messenger, Routes.Settings, Routes.ProfileEditData, Routes.ProfileEditPassword];
+      if (protectedRoutes.includes(currentPath as Routes)) {
+        router.go(Routes.Index);
+      }
+    }
+  } catch (e) {
+    console.error('App initialization failed', e);
+
+    router.start();
+    router.go(Routes.Index);
   }
-
-  renderDOM('#app', page);
 });
+
