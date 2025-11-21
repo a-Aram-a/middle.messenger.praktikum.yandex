@@ -1,4 +1,4 @@
-import { authAPI, type SigninData, type SignupData } from '@/app/api/auth-api';
+import { authAPI, type SigninData, type SignupData, type User } from '@/app/api/auth-api';
 import store from '@/core/store/store';
 import { Router } from '@/core/router';
 
@@ -29,13 +29,14 @@ class AuthController {
     }
   }
 
-  public async fetchUser() {
+  public async fetchUser(): Promise<User | null> {
     try {
       const user = await authAPI.getUser();
       store.set('user', user);
+      return user;
     } catch (e) {
       store.set('user', null);
-      console.log('No user authenticated');
+      return null;
     }
   }
 

@@ -14,6 +14,17 @@ export type SigninData = {
   password: string;
 };
 
+export type User = {
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string | null;
+  phone: string;
+  login: string;
+  avatar: string | null;
+  email: string;
+};
+
 
 class AuthAPI extends BaseAPI {
   constructor() {
@@ -55,9 +66,9 @@ class AuthAPI extends BaseAPI {
       .catch(this.handleError);
   }
 
-  public getUser(): Promise<any> {
+  public getUser(): Promise<User> {
     return this.http.get('/user')
-      .then(xhr => this.handleResponse<any>(xhr))
+      .then(xhr => this.handleResponse<User>(xhr))
       .catch(this.handleError);
   }
 

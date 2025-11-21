@@ -20,7 +20,7 @@ export class HomePage extends Block {
   constructor() {
     setPageMetadata({ title: 'Home', description: 'Your chats and messages.' });
 
-    const profileLink = new Link({ href: '/profile', label: 'Profile >', className: 'home-page__profile-link' });
+    const profileLink = new Link({ href: '/settings', label: 'Profile >', className: 'home-page__profile-link' });
     const searchInput = new SearchInput({ onInput: (value) => console.log('Search:', value) });
 
     // mock chats data
