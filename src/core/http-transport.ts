@@ -53,13 +53,22 @@ export class HTTPTransport {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url);
 
+      xhr.withCredentials = true;
+
       Object.entries(headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
       });
 
       xhr.timeout = timeout;
 
-      xhr.onload = () => resolve(xhr);
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr);
+        } else {
+          // Reject with the xhr object so we can access status and responseText
+          reject(xhr);
+        }
+      };
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = () => reject(new Error('Request timed out'));

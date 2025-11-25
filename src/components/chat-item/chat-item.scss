@@ -6,10 +6,10 @@
   padding: 12px;
   margin-left: -10px;
   margin-right: -10px;
-  text-decoration: none;
   color: inherit;
   border-bottom: 1px solid var(--color-stroke);
   border-radius: 8px;
+  cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {

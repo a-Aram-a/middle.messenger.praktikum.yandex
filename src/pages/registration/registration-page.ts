@@ -8,6 +8,8 @@ import { ValidationRule } from '@/utils/validation';
 import { ContentBlock } from '@/core/content-block';
 import template from './registration-page.hbs?raw';
 import { setPageMetadata } from '@/utils/metadata';
+import authController from '@/controllers/auth-controller';
+import { type SignupData } from '@/app/api/auth-api';
 
 export class RegistrationPage extends Block {
   constructor() {
@@ -39,7 +41,7 @@ export class RegistrationPage extends Block {
     });
 
     const loginLink = new Link({
-      href: '/login',
+      href: '/',
       label: 'Log in',
       className: 'auth-form__link',
     });
@@ -58,7 +60,7 @@ export class RegistrationPage extends Block {
         }
         delete data.password_repeat;
 
-        console.log('Registration form submitted with data:', data);
+        authController.signup(data as SignupData);
       },
     });
 

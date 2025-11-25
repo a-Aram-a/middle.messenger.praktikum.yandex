@@ -1,6 +1,6 @@
-<a href="/chat/{{this.id}}" class="chat-item {{#if this.isActive}}chat-item_active{{/if}}">
+<div class="chat-item {{#if this.isActive}}chat-item_active{{/if}}">
     <div class="chat-item__avatar">
-        <img class="chat-item__avatar-img" src="{{this.avatarUrl}}" alt="Аватар пользователя {{this.name}}">
+        <img class="chat-item__avatar-img" src="{{this.avatarUrl}}" alt="User avatar {{this.name}}">
     </div>
     <div class="chat-item__content">
         <div class="chat-item__header">
@@ -17,4 +17,4 @@
     {{#if this.unreadCount}}
         <div class="chat-item__unread-counter">{{this.unreadCount}}</div>
     {{/if}}
-</a>
+</div>

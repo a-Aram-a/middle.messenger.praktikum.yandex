@@ -6,6 +6,7 @@ export enum ValidationRule {
   Password = 'password',
   Phone = 'phone',
   Message = 'message',
+  ChatName = 'chat_name',
 }
 
 const validationPatterns: Record<ValidationRule, RegExp> = {
@@ -16,6 +17,7 @@ const validationPatterns: Record<ValidationRule, RegExp> = {
   [ValidationRule.Password]: /^(?=.*[A-Z])(?=.*\d).{8,40}$/,
   [ValidationRule.Phone]: /^\+?\d{10,15}$/,
   [ValidationRule.Message]: /.+/,
+  [ValidationRule.ChatName]: /^[a-zA-Zа-яёА-ЯЁ0-9\s_\-.,!?#@()]{1,50}$/,
 };
 
 export function validate(rule: ValidationRule, value: string): boolean {

@@ -1,0 +1,18 @@
+<div class="chat-view">
+    <header class="chat-view__header">
+        {{{ this.chatHeader }}}
+        <div class="chat-view__menu-wrapper">
+            {{{ this.menuButton }}}
+            {{#if this.isMenuOpen}}
+            {{{ this.dropdownMenu }}}
+            {{/if}}
+        </div>
+    </header>
+    <div class="chat-view__feed">
+        {{{ this.messageFeed }}}
+    </div>
+    <footer class="chat-view__footer">
+        {{{ this.messageForm }}}
+    </footer>
+    {{{ this.userModal }}}
+</div>

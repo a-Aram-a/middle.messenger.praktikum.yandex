@@ -1,0 +1,18 @@
+<div class="modal">
+    <div class="modal__overlay"></div>
+    <div class="modal__content">
+        {{#if title}}
+        <h2 class="modal__title">{{title}}</h2>
+        {{/if}}
+        <div class="modal__body">
+            {{{body}}}
+        </div>
+        {{#if actions}}
+        <div class="modal__actions">
+            {{#each actions}}
+            {{{this}}}
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</div>
