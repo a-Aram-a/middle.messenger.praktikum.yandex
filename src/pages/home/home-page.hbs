@@ -4,21 +4,14 @@
             {{{ this.profileLink }}}
             {{{ this.searchInput }}}
         </div>
+        <div class="home-page__create-chat">
+            {{{ this.createChatButton }}}
+        </div>
         {{{ this.chatList }}}
     </section>
+    {{{ this.createChatModal }}}
 
     <section class="home-page__main">
-        <div class="chat-view">
-            <header class="chat-view__header">
-                {{{ this.chatHeader }}}
-                {{{ this.menuButton }}}
-            </header>
-            <div class="chat-view__feed">
-                {{{ this.messageFeed }}}
-            </div>
-            <footer class="chat-view__footer">
-                {{{ this.messageForm }}}
-            </footer>
-        </div>
+        {{{ this.chatContent }}}
     </section>
 </div>

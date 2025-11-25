@@ -12,7 +12,7 @@ export class EventBus<E extends string = string, M extends { [K in E]: unknown[]
 
   off(event: E, callback: Listener<M[E]>): void {
     if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
+      throw new Error(`No event: ${event}`);
     }
     this.listeners[event] = this.listeners[event]!.filter(
       listener => listener !== callback,
