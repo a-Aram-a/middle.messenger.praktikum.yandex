@@ -2,23 +2,31 @@ import { Block, type Props } from '@/core/block';
 import { ChatHeader } from '@/components/chat-header';
 import { MessageFeed } from '@/components/message-feed';
 import { MessageForm } from '@/components/message-form';
+import { Message } from '@/components/message';
 import { Button } from '@/components/button';
 import { DropdownMenu, MenuItem } from '@/components/dropdown-menu';
 import { UserModal } from '@/components/user-modal';
-import { type Chat } from '@/app/api/chat-api';
+import { type Chat, type Message as MessageType } from '@/app/api/chat-api';
+import { connect } from '@/core/store/store';
+import chatController from '@/controllers/chat-controller';
+import { type User } from '@/app/api/auth-api';
 import template from './chat-view.hbs?raw';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://ya-praktikum.tech/api/v2';
 
 interface ChatViewProps extends Props {
   chat: Chat;
+  messages?: MessageType[];
+  user?: User;
 }
 
-export class ChatView extends Block<ChatViewProps> {
+class ChatViewBase extends Block<ChatViewProps> {
   private _isMenuOpen = false;
 
+  private _messageFeed: MessageFeed;
+
   constructor(props: ChatViewProps) {
-    const { chat } = props;
+    const { chat, messages = [], user } = props;
 
     const avatarUrl = chat.avatar
       ? `${API_BASE_URL}/resources${chat.avatar}`
@@ -54,11 +62,19 @@ export class ChatView extends Block<ChatViewProps> {
       ],
     });
 
-    const messageFeed = new MessageFeed({ items: [] });
+    const messageItems = messages.map(msg => new Message({
+      text: msg.content,
+      timestamp: new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      isIncoming: user ? msg.user_id !== user.id : false,
+    }));
+
+    const messageFeed = new MessageFeed({ items: messageItems });
 
     const messageForm = new MessageForm({
       onSubmit: (message) => {
-        console.log('Message to send:', message);
+        if (message.trim()) {
+          chatController.sendMessage(message);
+        }
       },
     });
 
@@ -72,6 +88,8 @@ export class ChatView extends Block<ChatViewProps> {
       isMenuOpen: false,
       userModal: null,
     });
+
+    this._messageFeed = messageFeed;
   }
 
   private toggleMenu(): void {
@@ -104,7 +122,25 @@ export class ChatView extends Block<ChatViewProps> {
     document.addEventListener('click', () => this.closeMenu());
   }
 
+  public componentDidUpdate(oldProps: ChatViewProps, newProps: ChatViewProps): boolean {
+    if (oldProps.messages !== newProps.messages) {
+      const messageItems = (newProps.messages || []).map(msg => new Message({
+        text: msg.content,
+        timestamp: new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isIncoming: newProps.user ? msg.user_id !== newProps.user.id : false,
+      }));
+      this._messageFeed.setProps({ items: messageItems });
+      return false;
+    }
+    return true;
+  }
+
   render() {
     return template;
   }
 }
+
+export const ChatView = connect((state) => ({
+  messages: state.messages as MessageType[] | undefined,
+  user: state.user as User | undefined,
+}))(ChatViewBase);

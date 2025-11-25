@@ -35,6 +35,24 @@ export type ChatUsersData = {
   chatId: number;
 };
 
+export type Message = {
+  id: number;
+  user_id: number;
+  chat_id: number;
+  time: string;
+  type: 'message' | 'file';
+  content: string;
+  file?: {
+    id: number;
+    user_id: number;
+    path: string;
+    filename: string;
+    content_type: string;
+    content_size: number;
+    upload_date: string;
+  };
+};
+
 class ChatAPI extends BaseAPI {
   constructor() {
     super('/chats');
@@ -90,6 +108,12 @@ class ChatAPI extends BaseAPI {
   public removeUsersFromChat(data: ChatUsersData): Promise<void> {
     return this.http.delete('/users', { data })
       .then(xhr => this.handleResponse<void>(xhr))
+      .catch(this.handleError);
+  }
+
+  public getChatToken(chatId: number): Promise<{ token: string }> {
+    return this.http.post(`/token/${chatId}`)
+      .then(xhr => this.handleResponse<{ token: string }>(xhr))
       .catch(this.handleError);
   }
 }
