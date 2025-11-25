@@ -10,12 +10,12 @@ export class IndexPage extends Block {
     setPageMetadata({ title: 'Home', description: 'A secure messaging app built with modern web technologies.' });
 
     const pageLinks = [
-      { href: '/login', label: 'Log In' },
-      { href: '/registration', label: 'Registration' },
+      { href: '/', label: 'Log In' },
+      { href: '/sign-up', label: 'Registration' },
       { href: '/404', label: 'Error 404' },
       { href: '/500', label: 'Error 500' },
-      { href: '/home', label: 'Home (Chat)' },
-      { href: '/profile', label: 'Profile' },
+      { href: '/messenger', label: 'Messenger (Chat)' },
+      { href: '/settings', label: 'Profile' },
       { href: '/profile-edit-data', label: 'Edit profile data' },
       { href: '/profile-edit-password', label: 'Edit password' },
     ];

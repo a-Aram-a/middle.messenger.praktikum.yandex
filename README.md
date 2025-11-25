@@ -60,12 +60,12 @@ The application is built on a custom component-based architecture using TypeScri
 
 ## ✨ Live Demo
 
-You can view the live deployment of the pages implemented during the 1-st and 2-nd sprint:
+You can view the live deployment of the application:
 
-- [Login Page](https://stunning-toffee-252476.netlify.app/login)
-- [Registration Page](https://stunning-toffee-252476.netlify.app/registration)
-- [Chat / Home Page](https://stunning-toffee-252476.netlify.app/home)
-- [User Profile](https://stunning-toffee-252476.netlify.app/profile)
+- [Login Page](https://stunning-toffee-252476.netlify.app/)
+- [Registration Page](https://stunning-toffee-252476.netlify.app/sign-up)
+- [Messenger / Chat Page](https://stunning-toffee-252476.netlify.app/messenger)
+- [User Profile](https://stunning-toffee-252476.netlify.app/settings)
 - [Edit Profile Data](https://stunning-toffee-252476.netlify.app/profile-edit-data)
 - [Change Password](https://stunning-toffee-252476.netlify.app/profile-edit-password)
 - [404 Not Found Page](https://stunning-toffee-252476.netlify.app/404)

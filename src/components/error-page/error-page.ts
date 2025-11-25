@@ -14,7 +14,7 @@ export class ErrorPage extends Block<ErrorPageProps> {
     super({
       ...props,
       homeLink: new Link({
-        href: '/home',
+        href: '/messenger',
         label: 'Go to Home',
         className: 'error-page__link',
       }),
