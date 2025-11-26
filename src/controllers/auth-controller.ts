@@ -15,7 +15,9 @@ class AuthController {
       await this.fetchUser();
       this.router.go('/messenger');
     } catch (e: any) {
-      console.error('Signin failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to sign in';
+      console.error('Signin failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
     }
   }
 
@@ -25,7 +27,9 @@ class AuthController {
       await this.fetchUser();
       this.router.go('/messenger');
     } catch (e: any) {
-      console.error('Signup failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to sign up';
+      console.error('Signup failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
     }
   }
 
@@ -46,7 +50,9 @@ class AuthController {
       store.set('user', null);
       this.router.go('/');
     } catch (e: any) {
-      console.error('Logout failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to logout';
+      console.error('Logout failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
     }
   }
 }

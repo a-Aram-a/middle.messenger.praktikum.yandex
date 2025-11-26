@@ -39,7 +39,9 @@ class ChatController {
         store.set('messages', uniqueMessages);
       });
     } catch (e: any) {
-      console.error('Failed to connect to chat:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to connect to chat';
+      console.error('Failed to connect to chat:', errorMessage);
+      alert(`Error: ${errorMessage}`);
     }
   }
 
@@ -53,7 +55,9 @@ class ChatController {
       store.set('chats', chats);
       return chats;
     } catch (e: any) {
-      console.error('Get chats failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to load chats';
+      console.error('Get chats failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return [];
     }
   }
@@ -64,7 +68,9 @@ class ChatController {
       await this.getChats();
       return id;
     } catch (e: any) {
-      console.error('Create chat failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to create chat';
+      console.error('Create chat failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return null;
     }
   }
@@ -75,7 +81,9 @@ class ChatController {
       await this.getChats();
       return true;
     } catch (e: any) {
-      console.error('Delete chat failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to delete chat';
+      console.error('Delete chat failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return false;
     }
   }
@@ -85,7 +93,9 @@ class ChatController {
       await chatAPI.addUsersToChat({ users: [userId], chatId });
       return true;
     } catch (e: any) {
-      console.error('Add user to chat failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to add user to chat';
+      console.error('Add user to chat failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return false;
     }
   }
@@ -95,8 +105,27 @@ class ChatController {
       await chatAPI.removeUsersFromChat({ users: [userId], chatId });
       return true;
     } catch (e: any) {
-      console.error('Remove user from chat failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to remove user from chat';
+      console.error('Remove user from chat failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return false;
+    }
+  }
+
+  public async updateChatAvatar(chatId: number, file: File): Promise<Chat | null> {
+    try {
+      const chat = await chatAPI.updateChatAvatar(chatId, file);
+      await this.getChats();
+      const selectedChat = store.getState().selectedChat as Chat | null;
+      if (selectedChat && selectedChat.id === chatId) {
+        store.set('selectedChat', chat);
+      }
+      return chat;
+    } catch (e: any) {
+      const errorMessage = e.reason || e.message || 'Failed to update chat avatar';
+      console.error('Update chat avatar failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
+      return null;
     }
   }
 }

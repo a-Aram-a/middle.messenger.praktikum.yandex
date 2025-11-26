@@ -1,4 +1,4 @@
-<button type="{{this.type}}" class="button button_{{this.variant}} {{this.className}}">
+<button type="{{this.type}}" class="button button_{{this.variant}} {{this.className}}" {{#if this.form}}form="{{this.form}}"{{/if}}>
     {{#if this.label}}
         {{this.label}}
     {{else}}

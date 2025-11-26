@@ -16,8 +16,7 @@ import { type Chat } from '@/app/api/chat-api';
 import { CreateChatModal } from '@/components/create-chat-modal';
 import { ChatPlaceholder } from '@/components/chat-placeholder';
 import { ChatView } from '@/components/chat-view';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://ya-praktikum.tech/api/v2';
+import { API_BASE_URL } from '@/core/constants';
 
 interface HomePageProps extends Props {
   chats?: Chat[];

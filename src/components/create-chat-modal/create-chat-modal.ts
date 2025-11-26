@@ -13,14 +13,22 @@ interface CreateChatModalProps extends Props {
 class CreateChatFormBody extends Block {
   private _input: TextInput;
 
-  constructor() {
+  constructor(props: { onSubmit: () => void }) {
     const input = new TextInput({
       name: 'title',
       label: 'Chat name',
       validationRule: ValidationRule.ChatName,
     });
 
-    super({ input });
+    super({
+      input,
+      events: {
+        submit: (e: Event) => {
+          e.preventDefault();
+          props.onSubmit();
+        },
+      },
+    });
     this._input = input;
   }
 
@@ -39,22 +47,24 @@ class CreateChatFormBody extends Block {
 
 export class CreateChatModal extends Block<CreateChatModalProps> {
   constructor(props: CreateChatModalProps) {
-    const formBody = new CreateChatFormBody();
+    let formBody: CreateChatFormBody;
+
+    const handleSubmit = async () => {
+      if (!formBody.validate()) return;
+
+      const title = formBody.getTitle();
+      if (title) {
+        await chatController.createChat(title);
+        props.onClose();
+      }
+    };
+
+    formBody = new CreateChatFormBody({ onSubmit: handleSubmit });
 
     const createButton = new Button({
       label: 'Create',
-      type: 'button',
-      events: {
-        click: async () => {
-          if (!formBody.validate()) return;
-
-          const title = formBody.getTitle();
-          if (title) {
-            await chatController.createChat(title);
-            props.onClose();
-          }
-        },
-      },
+      type: 'submit',
+      form: 'create-chat-form',
     });
 
     const cancelButton = new Button({

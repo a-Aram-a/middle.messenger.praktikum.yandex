@@ -33,12 +33,26 @@ class UserAPI extends BaseAPI {
 
   private handleError(xhr: XMLHttpRequest): Promise<never> {
     let error;
+
+    // Status 0 means network error (offline, CORS, blocked, etc.)
+    if (xhr.status === 0) {
+      error = new Error('Network error. Please check your internet connection.');
+      return Promise.reject(error);
+    }
+
+    // Handle specific HTTP status codes
+    if (xhr.status === 413) {
+      error = new Error('File is too large. Please choose a smaller image.');
+      return Promise.reject(error);
+    }
+
+    // Try to get error message from response
     try {
       const response = JSON.parse(xhr.responseText);
-      error = new Error(response.reason || `HTTP error! Status: ${xhr.status}`);
+      error = new Error(response.reason || `Request failed with status ${xhr.status}`);
       Object.assign(error, response);
     } catch (e) {
-      error = new Error(`HTTP error! Status: ${xhr.status}`);
+      error = new Error(`Request failed with status ${xhr.status}`);
     }
     return Promise.reject(error);
   }

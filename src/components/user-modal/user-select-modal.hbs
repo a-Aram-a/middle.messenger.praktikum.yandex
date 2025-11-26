@@ -1,0 +1,14 @@
+<form id="user-select-form" class="user-select-form">
+    <div class="user-select-form__group">
+        <label class="user-select-form__label">Select user</label>
+        <select name="userId" class="user-select-form__select" required>
+            <option value="">-- Select a user --</option>
+            {{#each users}}
+            <option value="{{this.id}}">{{this.login}} ({{this.first_name}} {{this.second_name}})</option>
+            {{/each}}
+        </select>
+        {{#if error}}
+        <span class="user-select-form__error">{{error}}</span>
+        {{/if}}
+    </div>
+</form>
