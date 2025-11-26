@@ -6,13 +6,13 @@ import { Message } from '@/components/message';
 import { Button } from '@/components/button';
 import { DropdownMenu, MenuItem } from '@/components/dropdown-menu';
 import { UserModal } from '@/components/user-modal';
-import { type Chat, type Message as MessageType } from '@/app/api/chat-api';
+import { type Chat, type Message as MessageType, chatAPI } from '@/app/api/chat-api';
 import { connect } from '@/core/store/store';
+import store from '@/core/store/store';
 import chatController from '@/controllers/chat-controller';
 import { type User } from '@/app/api/auth-api';
 import template from './chat-view.hbs?raw';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://ya-praktikum.tech/api/v2';
+import { API_BASE_URL } from '@/core/constants';
 
 interface ChatViewProps extends Props {
   chat: Chat;
@@ -51,12 +51,21 @@ class ChatViewBase extends Block<ChatViewProps> {
     const dropdownMenu = new DropdownMenu({
       items: [
         new MenuItem({
+          label: 'Change avatar',
+          onClick: () => this.showAvatarInput(),
+        }),
+        new MenuItem({
           label: 'Add a user',
           onClick: () => this.showUserModal('add'),
         }),
         new MenuItem({
           label: 'Remove a user',
           onClick: () => this.showUserModal('remove'),
+          variant: 'danger',
+        }),
+        new MenuItem({
+          label: 'Delete chat',
+          onClick: () => this.deleteChat(),
           variant: 'danger',
         }),
       ],
@@ -104,11 +113,22 @@ class ChatViewBase extends Block<ChatViewProps> {
     }
   }
 
-  private showUserModal(mode: 'add' | 'remove'): void {
+  private async showUserModal(mode: 'add' | 'remove'): Promise<void> {
     this.closeMenu();
+    let users;
+    if (mode === 'remove') {
+      try {
+        users = await chatAPI.getChatUsers(this.props.chat.id);
+      } catch (e: any) {
+        const errorMessage = e.reason || e.message || 'Failed to load chat users';
+        console.error('Failed to load chat users:', errorMessage);
+        alert(`Error: ${errorMessage}`);
+      }
+    }
     const modal = new UserModal({
       chatId: this.props.chat.id,
       mode,
+      users,
       onClose: () => this.hideUserModal(),
     });
     this.setProps({ userModal: modal });
@@ -116,6 +136,31 @@ class ChatViewBase extends Block<ChatViewProps> {
 
   private hideUserModal(): void {
     this.setProps({ userModal: null });
+  }
+
+  private showAvatarInput(): void {
+    this.closeMenu();
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.addEventListener('change', async (e) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+      if (file) {
+        await chatController.updateChatAvatar(this.props.chat.id, file);
+      }
+    });
+    input.click();
+  }
+
+  private async deleteChat(): Promise<void> {
+    this.closeMenu();
+    if (confirm('Are you sure you want to delete this chat?')) {
+      const success = await chatController.deleteChat(this.props.chat.id);
+      if (success) {
+        store.set('selectedChat', null);
+      }
+    }
   }
 
   public componentDidMount(): void {

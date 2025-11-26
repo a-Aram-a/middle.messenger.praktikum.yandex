@@ -55,6 +55,7 @@ export class WebSocketService {
 
     this.socket.addEventListener('error', (event) => {
       console.error('WebSocket error', event);
+      alert('Error: Failed to establish chat connection. Please check your internet connection and try again.');
     });
   }
 

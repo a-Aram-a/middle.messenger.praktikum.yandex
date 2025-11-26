@@ -11,8 +11,10 @@ interface MenuItemProps extends Props {
 
 export class MenuItem extends Block<MenuItemProps> {
   constructor(props: MenuItemProps) {
+    const variantClass = props.variant === 'danger' ? 'dropdown-menu__item_danger' : '';
     super({
       ...props,
+      className: variantClass,
       events: {
         click: () => props.onClick(),
       },
@@ -20,8 +22,7 @@ export class MenuItem extends Block<MenuItemProps> {
   }
 
   render() {
-    const variantClass = this.props.variant === 'danger' ? 'dropdown-menu__item_danger' : '';
-    return `<button class="dropdown-menu__item ${variantClass}">{{label}}</button>`;
+    return '<button class="dropdown-menu__item {{className}}">{{label}}</button>';
   }
 }
 

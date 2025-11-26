@@ -44,12 +44,19 @@ class AuthAPI extends BaseAPI {
 
   private handleError(xhr: XMLHttpRequest): Promise<never> {
     let error;
+
+    // Handle specific HTTP status codes
+    if (xhr.status === 0) {
+      error = new Error('Network error. Please check your connection.');
+      return Promise.reject(error);
+    }
+
     try {
       const response = JSON.parse(xhr.responseText);
-      error = new Error(response.reason || `HTTP error! Status: ${xhr.status}`);
+      error = new Error(response.reason || `Request failed with status ${xhr.status}`);
       Object.assign(error, response);
     } catch (e) {
-      error = new Error(`HTTP error! Status: ${xhr.status}`);
+      error = new Error(`Request failed with status ${xhr.status}`);
     }
     return Promise.reject(error);
   }

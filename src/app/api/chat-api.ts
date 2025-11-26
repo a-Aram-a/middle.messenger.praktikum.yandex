@@ -71,12 +71,26 @@ class ChatAPI extends BaseAPI {
 
   private handleError(xhr: XMLHttpRequest): Promise<never> {
     let error;
+
+    // Status 0 means network error (offline, CORS, blocked, etc.)
+    if (xhr.status === 0) {
+      error = new Error('Network error. Please check your internet connection.');
+      return Promise.reject(error);
+    }
+
+    // Handle specific HTTP status codes
+    if (xhr.status === 413) {
+      error = new Error('File is too large. Please choose a smaller image.');
+      return Promise.reject(error);
+    }
+
+    // Try to get error message from response
     try {
       const response = JSON.parse(xhr.responseText);
-      error = new Error(response.reason || `HTTP error! Status: ${xhr.status}`);
+      error = new Error(response.reason || `Request failed with status ${xhr.status}`);
       Object.assign(error, response);
     } catch (e) {
-      error = new Error(`HTTP error! Status: ${xhr.status}`);
+      error = new Error(`Request failed with status ${xhr.status}`);
     }
     return Promise.reject(error);
   }
@@ -114,6 +128,21 @@ class ChatAPI extends BaseAPI {
   public getChatToken(chatId: number): Promise<{ token: string }> {
     return this.http.post(`/token/${chatId}`)
       .then(xhr => this.handleResponse<{ token: string }>(xhr))
+      .catch(this.handleError);
+  }
+
+  public updateChatAvatar(chatId: number, file: File): Promise<Chat> {
+    const formData = new FormData();
+    formData.append('avatar', file);
+    formData.append('chatId', String(chatId));
+    return this.http.put('/avatar', { data: formData })
+      .then(xhr => this.handleResponse<Chat>(xhr))
+      .catch(this.handleError);
+  }
+
+  public getChatUsers(chatId: number): Promise<ChatUser[]> {
+    return this.http.get(`/${chatId}/users`)
+      .then(xhr => this.handleResponse<ChatUser[]>(xhr))
       .catch(this.handleError);
   }
 }

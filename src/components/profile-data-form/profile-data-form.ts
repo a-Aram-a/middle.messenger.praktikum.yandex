@@ -10,8 +10,7 @@ import { validateAndCollectData } from '@/utils/validation';
 import { connect } from '@/core/store/store';
 import { type User } from '@/app/api/auth-api';
 import userController from '@/controllers/user-controller';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://ya-praktikum.tech/api/v2';
+import { API_BASE_URL } from '@/core/constants';
 
 interface ProfileDataFormProps extends Props {
   isDisabled?: boolean;

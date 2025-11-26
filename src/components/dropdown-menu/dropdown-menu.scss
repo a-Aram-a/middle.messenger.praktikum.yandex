@@ -28,5 +28,9 @@
 
   &_danger {
     color: var(--color-danger);
+
+    &:hover {
+      background-color: rgb(255 47 47 / 10%);
+    }
   }
 }

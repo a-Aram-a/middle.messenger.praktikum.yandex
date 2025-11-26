@@ -17,7 +17,9 @@ class UserController {
       this.router.go('/settings');
       return user;
     } catch (e: any) {
-      console.error('Update profile failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to update profile';
+      console.error('Update profile failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return null;
     }
   }
@@ -28,7 +30,9 @@ class UserController {
       store.set('user', user);
       return user;
     } catch (e: any) {
-      console.error('Update avatar failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to update avatar';
+      console.error('Update avatar failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return null;
     }
   }
@@ -39,7 +43,9 @@ class UserController {
       this.router.go('/settings');
       return true;
     } catch (e: any) {
-      console.error('Update password failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to update password';
+      console.error('Update password failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return false;
     }
   }
@@ -48,7 +54,9 @@ class UserController {
     try {
       return await userAPI.searchUsers(login);
     } catch (e: any) {
-      console.error('Search users failed:', e.reason || e.message);
+      const errorMessage = e.reason || e.message || 'Failed to search users';
+      console.error('Search users failed:', errorMessage);
+      alert(`Error: ${errorMessage}`);
       return [];
     }
   }
