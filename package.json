@@ -12,11 +12,12 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "lint:scss": "stylelint \"src/**/*.scss\"",
     "lint:scss:fix": "stylelint \"src/**/*.scss\" --fix",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --project tsconfig.prod.json",
     "test": "cross-env NODE_OPTIONS=\"--import tsx\" mocha",
     "build": "npm run typecheck && npm run lint && npm run lint:scss && vite build",
     "preview": "vite preview --port 3000",
-    "start": "npm run build && npm run preview"
+    "start": "npm run build && npm run preview",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/chai": "^5.2.3",
@@ -32,6 +33,7 @@
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "glob": "^11.0.3",
+    "husky": "^9.1.7",
     "jsdom": "^27.2.0",
     "mocha": "^11.7.5",
     "sass": "^1.89.2",

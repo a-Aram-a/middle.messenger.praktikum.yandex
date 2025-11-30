@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { Router } from './router';
-import { Block, Props } from '@/core/block';
+import { Block, type Props } from '@/core/block';
 
 describe('Router', () => {
   class TestPage extends Block<Props> {

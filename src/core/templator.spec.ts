@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { Templator } from './templator';
-import Handlebars from 'handlebars';
 
 describe('Templator', () => {
   describe('compile метод', () => {
