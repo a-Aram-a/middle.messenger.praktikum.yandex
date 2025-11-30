@@ -12,22 +12,36 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "lint:scss": "stylelint \"src/**/*.scss\"",
     "lint:scss:fix": "stylelint \"src/**/*.scss\" --fix",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --project tsconfig.prod.json",
+    "test": "cross-env NODE_OPTIONS=\"--import tsx\" mocha",
     "build": "npm run typecheck && npm run lint && npm run lint:scss && vite build",
     "preview": "vite preview --port 3000",
-    "start": "npm run build && npm run preview"
+    "start": "npm run build && npm run preview",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/jsdom": "^27.0.0",
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^21.0.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "chai": "^6.2.1",
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "glob": "^11.0.3",
+    "husky": "^9.1.7",
+    "jsdom": "^27.2.0",
+    "mocha": "^11.7.5",
     "sass": "^1.89.2",
+    "sinon": "^21.0.0",
     "stylelint": "^16.23.1",
     "stylelint-config-standard-scss": "^15.0.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "~5.8.3",
     "vite": "^7.0.4",
     "vite-plugin-handlebars": "^2.0.0"
@@ -35,5 +49,8 @@
   "dependencies": {
     "handlebars": "^4.7.8",
     "nanoid": "^5.1.5"
+  },
+  "overrides": {
+    "esbuild": "^0.27.0"
   }
 }
