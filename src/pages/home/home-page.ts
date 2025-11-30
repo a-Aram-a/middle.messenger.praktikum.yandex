@@ -1,101 +1,130 @@
 import './home-page.scss';
 
-import { Block } from '@/core/block';
+import { Block, type Props } from '@/core/block';
 import { MainLayout } from '@/layout/main';
 import { Link } from '@/components/link';
 import { SearchInput } from '@/components/search-input';
 import { ChatList } from '@/components/chat-list';
 import { ChatItem } from '@/components/chat-item';
-import { ChatHeader } from '@/components/chat-header';
-import { MessageFeed } from '@/components/message-feed';
-import { Message } from '@/components/message';
-import { DateSeparator } from '@/components/date-separator';
-import { MessageForm } from '@/components/message-form';
 import { Button } from '@/components/button';
 import { setPageMetadata } from '@/utils/metadata';
 import { ContentBlock } from '@/core/content-block';
 import template from './home-page.hbs?raw';
+import chatController from '@/controllers/chat-controller';
+import { connect } from '@/core/store/store';
+import { type Chat } from '@/app/api/chat-api';
+import { CreateChatModal } from '@/components/create-chat-modal';
+import { ChatPlaceholder } from '@/components/chat-placeholder';
+import { ChatView } from '@/components/chat-view';
+import { API_BASE_URL } from '@/core/constants';
 
-export class HomePage extends Block {
-  constructor() {
+interface HomePageProps extends Props {
+  chats?: Chat[];
+  selectedChat?: Chat | null;
+}
+
+class HomePageBase extends Block<HomePageProps> {
+  private _chatList: ChatList;
+
+  private _contentBlock: ContentBlock;
+
+  constructor(props: HomePageProps) {
     setPageMetadata({ title: 'Home', description: 'Your chats and messages.' });
 
-    const profileLink = new Link({ href: '/profile', label: 'Profile >', className: 'home-page__profile-link' });
+    const profileLink = new Link({ href: '/settings', label: 'Profile >', className: 'home-page__profile-link' });
     const searchInput = new SearchInput({ onInput: (value) => console.log('Search:', value) });
 
-    // mock chats data
-    const chatItems = [
-      new ChatItem({
-        id: 1,
-        avatarUrl: '/images/icons/avatar-placeholder.svg',
-        name: 'Ilya',
-        lastMessageTime: '15:12',
-        lastMessageText: 'Friends, I have a special news release for you!...',
-        unreadCount: 4,
-      }),
-      new ChatItem({
-        id: 2,
-        avatarUrl: '/images/icons/avatar-placeholder.svg',
-        name: 'Vadim',
-        lastMessageTime: 'Fri',
-        lastMessageSender: 'You:',
-        lastMessageText: 'Cool!',
-        isActive: true,
-      }),
-    ];
+    const createChatButton = new Button({
+      label: '+ New Chat',
+      variant: 'secondary',
+      className: 'home-page__create-chat-btn',
+      events: {
+        click: () => this.showCreateChatModal(),
+      },
+    });
+
+    const chatItems = (props.chats || []).map(chat => new ChatItem({
+      id: chat.id,
+      avatarUrl: chat.avatar ? `${API_BASE_URL}/resources${chat.avatar}` : '/images/icons/avatar-placeholder.svg',
+      name: chat.title,
+      lastMessageTime: chat.last_message?.time ? new Date(chat.last_message.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+      lastMessageText: chat.last_message?.content || '',
+      unreadCount: chat.unread_count || undefined,
+    }));
     const chatList = new ChatList({ chats: chatItems });
 
-    const chatHeader = new ChatHeader({ avatarUrl: '/images/icons/avatar-placeholder.svg', name: 'Vadim' });
-
-    const menuButton = new Button({
-      className: 'chat-view__menu-button',
-      label: '',
-      events: {
-        click: () => {
-          console.log('Menu button clicked!');
-        },
-      },
-    });
-
-    // mock messages data
-    const messageItems = [
-      new DateSeparator({ date: '19 июня' }),
-      new Message({
-        text: 'Hi! Look, an interesting piece of lunar space history has surfaced here.',
-        timestamp: '11:56',
-        isIncoming: true,
-      }),
-      new Message({ imageUrl: '/images/image-placeholder.jpg', timestamp: '11:57', isIncoming: true }),
-      new Message({ text: 'Cool!', timestamp: '12:00', isIncoming: false }),
-    ];
-    const messageFeed = new MessageFeed({ items: messageItems });
-
-    const messageForm = new MessageForm({
-      onSubmit: (message) => {
-        console.log('Message to send:', message);
-      },
-    });
+    const chatContent = props.selectedChat
+      ? new ChatView({ chat: props.selectedChat })
+      : new ChatPlaceholder();
 
     // Wrap the page with MainLayout
+    const contentBlock = new ContentBlock({
+      template: template,
+      profileLink,
+      searchInput,
+      createChatButton,
+      chatList,
+      chatContent,
+      createChatModal: null,
+    });
+
     const mainLayout = new MainLayout({
-      content: new ContentBlock({
-        template: template,
-        profileLink,
-        searchInput,
-        chatList,
-        chatHeader,
-        menuButton,
-        messageFeed,
-        messageForm,
-      }),
+      content: contentBlock,
     });
 
     super({
+      ...props,
       mainLayout,
     });
+
+    this._chatList = chatList;
+    this._contentBlock = contentBlock;
+  }
+
+  private showCreateChatModal(): void {
+    const modal = new CreateChatModal({
+      onClose: () => this.hideCreateChatModal(),
+    });
+    this._contentBlock.setProps({ createChatModal: modal });
+  }
+
+  private hideCreateChatModal(): void {
+    this._contentBlock.setProps({ createChatModal: null });
+  }
+
+  public componentDidMount(): void {
+    chatController.getChats();
+  }
+
+  componentDidUpdate(oldProps: HomePageProps, newProps: HomePageProps): boolean {
+    if (oldProps.chats !== newProps.chats) {
+      const chatItems = (newProps.chats || []).map(chat => new ChatItem({
+        id: chat.id,
+        avatarUrl: chat.avatar ? `${API_BASE_URL}/resources${chat.avatar}` : '/images/icons/avatar-placeholder.svg',
+        name: chat.title,
+        lastMessageTime: chat.last_message?.time ? new Date(chat.last_message.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+        lastMessageText: chat.last_message?.content || '',
+        unreadCount: chat.unread_count || undefined,
+      }));
+      this._chatList.setProps({ chats: chatItems });
+    }
+
+    if (oldProps.selectedChat !== newProps.selectedChat) {
+      const chatContent = newProps.selectedChat
+        ? new ChatView({ chat: newProps.selectedChat })
+        : new ChatPlaceholder();
+      this._contentBlock.setProps({ chatContent });
+    }
+
+    return false;
   }
 
   render() {
     return '{{{ mainLayout }}}';
   }
 }
+
+export const HomePage = connect((state) => ({
+  chats: state.chats as Chat[] | undefined,
+  selectedChat: state.selectedChat as Chat | null | undefined,
+}))(HomePageBase);

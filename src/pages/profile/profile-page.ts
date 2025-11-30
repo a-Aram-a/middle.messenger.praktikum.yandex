@@ -3,6 +3,8 @@ import { ProfileLayout } from '@/layout/profile';
 import { ProfileDataForm } from '@/components/profile-data-form';
 import { Link } from '@/components/link';
 import { setPageMetadata } from '@/utils/metadata';
+import { Button } from '@/components/button';
+import authController from '@/controllers/auth-controller';
 
 export class ProfilePage extends Block {
   constructor() {
@@ -12,10 +14,21 @@ export class ProfilePage extends Block {
       isDisabled: true,
     });
 
+    const logoutButton = new Button({
+      label: 'Log Out',
+      variant: 'secondary',
+      className: 'profile-page__button link_danger',
+      events: {
+        click: () => {
+          authController.logout();
+        },
+      },
+    });
+
     const profileButtons = [
       new Link({ href: '/profile-edit-data', label: 'Edit Data', className: 'profile-page__button' }),
       new Link({ href: '/profile-edit-password', label: 'Change the password', className: 'profile-page__button' }),
-      new Link({ href: '/login', label: 'Log Out', className: 'profile-page__button link_danger' }),
+      logoutButton,
     ];
 
     const profileLayout = new ProfileLayout({

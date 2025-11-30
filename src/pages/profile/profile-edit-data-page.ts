@@ -2,6 +2,8 @@ import { Block } from '@/core/block';
 import { ProfileLayout } from '@/layout/profile';
 import { ProfileDataForm } from '@/components/profile-data-form';
 import { setPageMetadata } from '@/utils/metadata';
+import userController from '@/controllers/user-controller';
+import { type ProfileData } from '@/app/api/user-api';
 
 export class ProfileEditDataPage extends Block {
   constructor() {
@@ -9,7 +11,7 @@ export class ProfileEditDataPage extends Block {
 
     const profileDataForm = new ProfileDataForm({
       onSubmit: (data) => {
-        console.log('Profile data form submitted:', data);
+        userController.updateProfile(data as ProfileData);
       },
     });
 

@@ -10,6 +10,7 @@ interface ButtonProps extends Props {
   type?: 'button' | 'submit' | 'reset';
   variant?: 'primary' | 'secondary';
   className?: string;
+  form?: string;
 }
 
 export class Button extends Block<ButtonProps> {

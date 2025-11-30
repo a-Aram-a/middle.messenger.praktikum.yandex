@@ -7,24 +7,65 @@ The application is built on a custom component-based architecture using TypeScri
 
 ## ✨ Features
 
-* **Custom Component Framework**: A lightweight, reactive component framework built from the ground up using a `Block` class and an Event Bus.
-* **Client-Side Rendering**: Pages are rendered dynamically in the browser.
-* **Component-Based Architecture**: The entire UI is broken down into reusable, encapsulated components (Buttons, Inputs, Forms, Layouts, etc.).
-* **Form Validation**: A unified validation system for all forms, with checks on `blur` and `submit`.
+### Core Functionality
+* **User Authentication**: Complete authorization flow with registration, login, and logout functionality
+* **User Profile Management**: View and edit profile data, change password, update avatar
+* **Chat Management**: Create chats, view chat list, add/remove users to/from chats
+* **Real-Time Messaging**: Send and receive messages in real-time using WebSocket connection
+* **User Search**: Search for users by login to add them to chats
+* **Client-Side Routing**: SPA routing with browser history support, URL persistence, and route protection
+
+### Technical Features
+* **Custom Component Framework**: A lightweight, reactive component framework built from the ground up using a `Block` class and an Event Bus
+* **State Management**: Centralized reactive store with automatic component updates
+* **Client-Side Rendering**: Pages are rendered dynamically in the browser
+* **Component-Based Architecture**: The entire UI is broken down into reusable, encapsulated components (Buttons, Inputs, Forms, Modals, etc.)
+* **Form Validation**: A unified validation system for all forms with regex-based rules, checks on `blur` and `submit`
+* **HTTP Client**: Custom XMLHttpRequest-based HTTP client with credentials support and error handling
+* **WebSocket Service**: Real-time bidirectional communication with automatic reconnection and ping/pong mechanism
 * **Code Quality Assurance**: The project is fully configured with static analysis tools to ensure code consistency and quality:
-  * **TypeScript** for strict type checking.
-  * **ESLint** with Airbnb's style guide for code analysis.
-  * **Stylelint** for SCSS linting, configured for BEM.
-  * **EditorConfig** for consistent coding styles across different editors.
+  * **TypeScript** for strict type checking
+  * **ESLint** with Airbnb's style guide for code analysis
+  * **Stylelint** for SCSS linting, configured for BEM
+  * **EditorConfig** for consistent coding styles across different editors
+
+## 🛠️ Technologies & Tools
+
+### Build & Development
+* **Vite** - Fast build tool and development server with hot module replacement (HMR)
+* **TypeScript** - Static type checking and enhanced developer experience
+* **Handlebars** - Template engine for component rendering
+
+### Styling
+* **SCSS/Sass** - CSS preprocessor for maintainable styles
+* **BEM Methodology** - Block-Element-Modifier naming convention for CSS classes
+* **Stylelint** - SCSS code linting and style enforcement
+
+### Code Quality
+* **ESLint** - JavaScript/TypeScript linting with Airbnb configuration
+* **TypeScript Compiler** - Type checking and compilation
+* **EditorConfig** - Consistent coding styles across editors
+
+### Communication & API
+* **XMLHttpRequest** - Custom HTTP client for REST API communication
+* **WebSocket** - Real-time bidirectional communication for messaging
+* **Yandex Praktikum API** - Backend API at `ya-praktikum.tech`
+
+### Architecture Patterns
+* **Custom Component Framework** - Block-based reactive components
+* **Event Bus** - Event-driven communication between components
+* **State Management** - Centralized reactive store with observer pattern
+* **Router** - Client-side routing with History API
+* **MVC Pattern** - Controllers for business logic separation
 
 ## ✨ Live Demo
 
-You can view the live deployment of the pages implemented during the 1-st and 2-nd sprint:
+You can view the live deployment of the application:
 
-- [Login Page](https://stunning-toffee-252476.netlify.app/login)
-- [Registration Page](https://stunning-toffee-252476.netlify.app/registration)
-- [Chat / Home Page](https://stunning-toffee-252476.netlify.app/home)
-- [User Profile](https://stunning-toffee-252476.netlify.app/profile)
+- [Login Page](https://stunning-toffee-252476.netlify.app/)
+- [Registration Page](https://stunning-toffee-252476.netlify.app/sign-up)
+- [Messenger / Chat Page](https://stunning-toffee-252476.netlify.app/messenger)
+- [User Profile](https://stunning-toffee-252476.netlify.app/settings)
 - [Edit Profile Data](https://stunning-toffee-252476.netlify.app/profile-edit-data)
 - [Change Password](https://stunning-toffee-252476.netlify.app/profile-edit-password)
 - [404 Not Found Page](https://stunning-toffee-252476.netlify.app/404)
@@ -65,7 +106,7 @@ Ensure you have the following installed on your system:
 You can run the following commands from the project root:
 
 -   **`npm run dev`**
-    -   Starts the development server with hot-reloading.
+    -   Starts the Vite development server with hot module replacement (HMR) on `http://localhost:3000`.
 
 -   **`npm run typecheck`**
     -   Runs the TypeScript compiler to check for any type errors in the project.
@@ -77,7 +118,7 @@ You can run the following commands from the project root:
     -   Runs Stylelint to check SCSS files for style errors.
 
 -   **`npm run build`**
-    -   Runs `typecheck`, `lint`, and `lint:scss` sequentially, and if all checks pass, compiles and builds the project for production in the `dist` folder.
+    -   Runs `typecheck`, `lint`, and `lint:scss` sequentially, and if all checks pass, builds the project for production using Vite. The optimized output is placed in the `dist` folder.
 
 -   **`npm run preview`**
     -   Starts a local server to preview the production build from the `dist` folder on `http://localhost:3000`.

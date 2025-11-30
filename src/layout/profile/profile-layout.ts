@@ -18,7 +18,7 @@ export class ProfileLayout extends MainLayout {
       ...props,
       content: new ContentBlock({
         ...props,
-        backPanel: new BackPanel({ backLink: '/home' }),
+        backPanel: new BackPanel({ backLink: '/messenger' }),
         template: template,
       }),
     });

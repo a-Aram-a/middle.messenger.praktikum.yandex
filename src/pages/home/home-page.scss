@@ -26,6 +26,14 @@
   color: var(--color-text-secondary);
 }
 
+.home-page__create-chat {
+  margin: 10px 0;
+}
+
+.home-page__create-chat-btn {
+  width: 100%;
+}
+
 .home-page__placeholder-text {
   color: var(--color-text-secondary);
 }
@@ -52,6 +60,10 @@
 .chat-view__footer {
   border-top: 1px solid var(--color-stroke);
   border-bottom: none;
+}
+
+.chat-view__menu-wrapper {
+  position: relative;
 }
 
 .chat-view__menu-button {

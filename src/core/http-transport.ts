@@ -14,6 +14,7 @@ type Options = {
   timeout?: number;
 };
 
+type HTTPMethod = (endpoint: string, options?: Omit<Options, 'method'>) => Promise<XMLHttpRequest>;
 
 function queryStringify(data: Record<string, string | number | boolean>): string {
   if (typeof data !== 'object' || data === null) {
@@ -29,29 +30,32 @@ export class HTTPTransport {
     this.baseUrl = baseUrl;
   }
 
-  public get = (endpoint: string, options: Omit<Options, 'method'> = {}): Promise<XMLHttpRequest> => {
+  public get: HTTPMethod = (endpoint, options = {}) => {
     const url = this.baseUrl + (options.data ? endpoint + queryStringify(options.data) : endpoint);
     return this.request(url, { ...options, method: Method.Get }, options.timeout);
   };
 
-  public put = (endpoint: string, options: Omit<Options, 'method'> = {}): Promise<XMLHttpRequest> => {
+  public put: HTTPMethod = (endpoint, options = {}) => {
     return this.request(this.baseUrl + endpoint, { ...options, method: Method.Put }, options.timeout);
   };
 
-  public post = (endpoint: string, options: Omit<Options, 'method'> = {}): Promise<XMLHttpRequest> => {
+  public post: HTTPMethod = (endpoint, options = {}) => {
     return this.request(this.baseUrl + endpoint, { ...options, method: Method.Post }, options.timeout);
   };
 
-  public delete = (endpoint: string, options: Omit<Options, 'method'> = {}): Promise<XMLHttpRequest> => {
+  public delete: HTTPMethod = (endpoint, options = {}) => {
     return this.request(this.baseUrl + endpoint, { ...options, method: Method.Delete }, options.timeout);
   };
 
   private request = (url: string, options: Options, timeout = 5000): Promise<XMLHttpRequest> => {
     const { method, data, headers = {} } = options;
+    const isUpload = data instanceof FormData;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url);
+
+      xhr.withCredentials = true;
 
       Object.entries(headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
@@ -59,10 +63,21 @@ export class HTTPTransport {
 
       xhr.timeout = timeout;
 
-      xhr.onload = () => resolve(xhr);
-      xhr.onabort = reject;
-      xhr.onerror = reject;
-      xhr.ontimeout = () => reject(new Error('Request timed out'));
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr);
+        } else {
+          // Reject with the xhr object so we can access status and responseText
+          reject(xhr);
+        }
+      };
+      xhr.onabort = () => reject(xhr);
+      xhr.onerror = () => {
+        // Add metadata to help with error handling
+        (xhr as any)._isUpload = isUpload;
+        reject(xhr);
+      };
+      xhr.ontimeout = () => reject(xhr);
 
       if (method === Method.Get || !data) {
         xhr.send();

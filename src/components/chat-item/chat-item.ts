@@ -2,6 +2,7 @@ import './chat-item.scss';
 
 import { Block, type Props } from '@/core/block';
 import template from './chat-item.hbs?raw';
+import chatController from '@/controllers/chat-controller';
 
 interface ChatItemProps extends Props {
   id: number;
@@ -12,17 +13,19 @@ interface ChatItemProps extends Props {
   lastMessageSender?: string;
   unreadCount?: number;
   isActive?: boolean;
+  onSelect?: (id: number) => void;
 }
 
 export class ChatItem extends Block<ChatItemProps> {
   constructor(props: ChatItemProps) {
     super({
       ...props,
-
-      // TEMP: remove after implementing routing
       events: {
-        click: (event: Event) => {
-          event.preventDefault();
+        click: () => {
+          chatController.selectChat(props.id);
+          if (props.onSelect) {
+            props.onSelect(props.id);
+          }
         },
       },
     });
