@@ -127,7 +127,7 @@ You can run the following commands from the project root:
     -   Runs all unit tests using Mocha test framework. Tests are located next to their corresponding source files (e.g., `block.spec.ts` next to `block.ts`).
 
 -   **`npm run typecheck`**
-    -   Runs the TypeScript compiler to check for type errors in production code (excludes test files).
+    -   Runs the TypeScript compiler to check for type errors in production code.
 
 -   **`npm run lint`**
     -   Runs ESLint to check TypeScript files for style and syntax errors.
