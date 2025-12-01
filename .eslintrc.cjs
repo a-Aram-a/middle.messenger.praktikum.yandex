@@ -15,6 +15,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  ignorePatterns: ['*.spec.ts', '*.test.ts', 'test'],
   settings: {
     'import/resolver': {
       typescript: {

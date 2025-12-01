@@ -27,7 +27,14 @@ The application is built on a custom component-based architecture using TypeScri
   * **TypeScript** for strict type checking
   * **ESLint** with Airbnb's style guide for code analysis
   * **Stylelint** for SCSS linting, configured for BEM
+  * **Husky Pre-commit Hooks** to prevent committing invalid code
   * **EditorConfig** for consistent coding styles across different editors
+* **Comprehensive Testing**: Full test coverage with unit tests for core modules:
+  * **Block Component Framework** - 21 tests covering lifecycle, rendering, props, and events
+  * **Router** - 17 tests for navigation, routing, and 404 handling
+  * **HTTP Transport** - 11 tests for REST API communication
+  * **Templator** - 24 tests for template compilation and Handlebars integration
+  * Total: **73 passing tests** ensuring code reliability
 
 ## 🛠️ Technologies & Tools
 
@@ -41,9 +48,15 @@ The application is built on a custom component-based architecture using TypeScri
 * **BEM Methodology** - Block-Element-Modifier naming convention for CSS classes
 * **Stylelint** - SCSS code linting and style enforcement
 
-### Code Quality
+### Code Quality & Testing
 * **ESLint** - JavaScript/TypeScript linting with Airbnb configuration
 * **TypeScript Compiler** - Type checking and compilation
+* **Stylelint** - SCSS linting with BEM methodology support
+* **Husky** - Git hooks for pre-commit validation
+* **Mocha** - Test framework for unit and integration tests
+* **Chai** - Assertion library for test expectations
+* **Sinon** - Mocking and stubbing library for tests
+* **JSDOM** - DOM implementation for Node.js testing environment
 * **EditorConfig** - Consistent coding styles across editors
 
 ### Communication & API
@@ -105,18 +118,30 @@ Ensure you have the following installed on your system:
 
 You can run the following commands from the project root:
 
+#### Development
 -   **`npm run dev`**
-    -   Starts the Vite development server with hot module replacement (HMR) on `http://localhost:3000`.
+    -   Starts the Vite development server with hot module replacement (HMR) on `http://localhost:5173`.
+
+#### Testing & Quality Checks
+-   **`npm test`**
+    -   Runs all unit tests using Mocha test framework. Tests are located next to their corresponding source files (e.g., `block.spec.ts` next to `block.ts`).
 
 -   **`npm run typecheck`**
-    -   Runs the TypeScript compiler to check for any type errors in the project.
+    -   Runs the TypeScript compiler to check for type errors in production code.
 
 -   **`npm run lint`**
     -   Runs ESLint to check TypeScript files for style and syntax errors.
 
+-   **`npm run lint:fix`**
+    -   Runs ESLint with auto-fix to automatically correct fixable issues.
+
 -   **`npm run lint:scss`**
     -   Runs Stylelint to check SCSS files for style errors.
 
+-   **`npm run lint:scss:fix`**
+    -   Runs Stylelint with auto-fix to automatically correct fixable SCSS issues.
+
+#### Build & Deploy
 -   **`npm run build`**
     -   Runs `typecheck`, `lint`, and `lint:scss` sequentially, and if all checks pass, builds the project for production using Vite. The optimized output is placed in the `dist` folder.
 
@@ -125,3 +150,29 @@ You can run the following commands from the project root:
 
 -   **`npm run start`**
     -   A convenience script that runs `build` and then `preview`.
+
+### Pre-commit Hooks
+
+The project uses **Husky** to run automated checks before each commit:
+- TypeScript type checking
+- ESLint code quality checks
+- Stylelint SCSS validation
+- All unit tests (73 tests)
+
+This ensures that only valid, tested code is committed to the repository.
+
+### Security & Package Management
+
+The project maintains a secure and up-to-date dependency tree:
+
+-   **`npm audit`**
+    -   Check for security vulnerabilities in dependencies.
+    -   Currently: **0 vulnerabilities** ✅
+
+-   **`npm outdated`**
+    -   Check for outdated packages and available updates.
+
+-   **`npm update`**
+    -   Update all packages to their latest compatible versions.
+
+The project uses npm overrides to ensure nested dependencies use secure versions, particularly for build tools like esbuild.
